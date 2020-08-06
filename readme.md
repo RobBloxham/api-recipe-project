@@ -1,4 +1,5 @@
-# Dan Boterashvili - Unit 1 Project Proposal
+# Recipe Finder 
+# Unit 1 Project Proposal
 
 ## Motivation:
 I have always loved to cook. Eating delicious and healthy food has always been important to me. Sometimes after a long day of work, its can be hard to think about what I want to eat. I have just enough energy to go to the store and buy groceries and whip up a quick meal. I want a quick and easy way to take stock of what ingredients I have in my fridge, so as I run out to the store I can look up recipes online and create a fast shopping list for the missing ingredients.
