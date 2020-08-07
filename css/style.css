@@ -76,3 +76,7 @@ body {
 	margin: 6px;
 	padding: 5px;
 } */ 
+
+.recipe-card {
+	board: 5px solid black;
+}
