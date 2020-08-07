@@ -2,6 +2,8 @@
 const recipes = [{"title":"Chicken Tortilla Wrap Sandwich","href":"http:\/\/www.recipezaar.com\/Chicken-Tortilla-Wrap-Sandwich-126712","ingredients":"cheddar cheese, salsa, chicken, flour tortillas, lettuce","thumbnail":"http:\/\/img.recipepuppy.com\/299609.jpg"},{"title":"Chicken Cordon Bleu Sandwich","href":"http:\/\/www.recipezaar.com\/Chicken-Cordon-Bleu-Sandwich-349780","ingredients":"chicken, french bread, ham, swiss cheese, vegetable oil","thumbnail":"http:\/\/img.recipepuppy.com\/295527.jpg"},{"title":"Chicken & Slaw Sandwich with Bell Pepper Relish ","href":"http:\/\/www.kraftfoods.com\/kf\/recipes\/chicken-slaw-sandwich-bell-110881.aspx","ingredients":"cheese spread, relish, sourdough bread, chicken, broccoli","thumbnail":"http:\/\/img.recipepuppy.com\/651857.jpg"},{"title":"Hot Chicken Sandwich Recipe","href":"http:\/\/cookeatshare.com\/recipes\/hot-chicken-sandwich-51902","ingredients":"chicken, eggs, olives, mushroom, mayonnaise","thumbnail":"http:\/\/img.recipepuppy.com\/794805.jpg"},{"title":"Parmesan Chicken Sandwich","href":"http:\/\/www.recipezaar.com\/Parmesan-Chicken-Sandwich-168023","ingredients":"black pepper, chicken, butter, oregano, bread crumbs, paprika, parmesan cheese, parsley, salt","thumbnail":"http:\/\/img.recipepuppy.com\/350088.jpg"},{"title":"Crispy Chicken Sandwich ","href":"http:\/\/www.kraftfoods.com\/kf\/recipes\/crispy-chicken-sandwich-55445.aspx","ingredients":"chicken, chicken, mozzarella cheese, french bread, dijon mustard, lettuce, tomato","thumbnail":"http:\/\/img.recipepuppy.com\/650315.jpg"}]
 
 
+
+
 // Arrays and Variables
 let mealChoice = [];
 let fridgeChoice = [];
@@ -32,10 +34,27 @@ for (let i = 0; i < recipeCards.length; i++) {
 	recipeCards[i].addEventListener('click', e => console.log(e))
 }
 
+// Fetch Data
+function fetchData() {
+	let url = 'https://recipepuppyproxy.herokuapp.com/api/?i=chicken&p=3';
+	
+	fetch(url)
+		.then((response) => {
+			if (response.status == 200) {
+				return response.json()
+			} else {
+				reject('server error')
+			}
+		})
+		.then(data => console.dir(data.results));
+}
 
 
 
 // Functions 
+
+// Parse JSON data
+// let recipeJson = JSON.parse(recipes);
 
 
 // handle recipes is not necessary until I fix fetch.
@@ -113,16 +132,13 @@ function handleChoice(e) {
 	// console.log('all lists', mealChoice, fridgeChoice, proteinChoice);
 }
 
-
-
 // Initialization Function
 function init() {
 	render();
+	fetchData();
 
 	// find a better home for this since you wont have this data until after sending a request once you get your data working.
 	// handleRecipes();
-
-	
 }
 
 // Render Fuction
@@ -131,9 +147,6 @@ function render() {
 	createButtons(fridgeList, fridgeItemsSelect);
 	createButtons(proteinList,proteinSelect);
 	createRecipeCard(recipes, recipeSection);
-
-	
-
 }
 
 
@@ -143,6 +156,7 @@ function render() {
 // * Send request to Recipe Puppy for Meal Type and Primary Protein.
 // // issue with request, CORs, I took a snapshot and will show it to instructors.
 //ask david why element.class = "doesnt work" when element.id = "does work" , instead I had to use setAtrribute('class', 'btn btn-primary')
+
 // * Create expanded template recipe card.
 // * Create Shopping list template.
 // * Listen for click event on rendered recipe card and jump to expanded recipe card.
@@ -152,5 +166,6 @@ function render() {
 // Stretch Goals
 // Interaction
 // handle if user selects too many proteins.
+// CORS Anywhere NODE proxy
 
 
