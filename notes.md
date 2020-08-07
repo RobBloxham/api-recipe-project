@@ -16,6 +16,24 @@ taylorButton.addEventListener('click', () => {
 			console.log(err);
 	})
 });
+
+
+//Append Child Template
+function appendDiv(quote, artist, idx) {
+    let newDiv = document.createElement("div");
+    newDiv.innerHTML = `
+                <div class="card" id="${artist.toLowerCase()}">
+                    <div class="card-body">
+                        <blockquote class="blockquote mb-0">
+                            <p>${quote}</p>
+                            <footer class="blockquote-footer">${artist}</footer>
+                        </blockquote>
+                    </div>
+                    <button onClick={deleteQuote(${idx})} id="delButton" class="btn">X</button>
+                </div>    
+    `
+    container.appendChild(newDiv);
+}
 ```
 
 

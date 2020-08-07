@@ -93,11 +93,18 @@ function createRecipeCard(recipeArray, recipeContainer) {
 
 function appendRecipeCard(recipe, recipeContainer) {
 	let newRecipeCard = document.createElement("div");
-	newRecipeCard.id =  `${recipe.title.toLowerCase()}`;
-	newRecipeCard.innerHTML = `${recipe.title}`;
+	newRecipeCard.innerHTML = `<div class="recipeCard" id="${recipe.title.toLowerCase()}">
+															<div>
+																<img width="50" height="50" id="${recipe.title.toLowerCase()}" src=${recipe.thumbnail}>
+																<div>
+																	<h1>${recipe.title}</h1>
+																	<h2>${recipe.ingredients}</h2>
+																</div>
+															</div>	
+														</div>`;
 
 	recipeContainer.appendChild(newRecipeCard)
-	console.log('recipe card working');
+	console.dir(typeof(recipe.ingredients));
 }
 
 
@@ -134,6 +141,8 @@ function render() {
 // * Listen for click event on rendered recipe card and jump to expanded recipe card.
 // * Listen to click event on Shopping List button to render Shopping List Template.
 
+
+// recipe.ingredients is a string, parse by , and add to an array.
 
 // Stretch Goals
 // Interaction
