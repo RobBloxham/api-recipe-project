@@ -46,14 +46,18 @@ function handleChoice(e) {
 
 
 // Cached Element References
+const body = document.body;
 const mealSelect = document.getElementById('select-meal');
 const fridgeItemsSelect = document.getElementById('select-fridge-items');
 const proteinSelect = document.getElementById('select-primary-protein');
 const recipeSection = document.getElementById('returned-recipes');
 
+
 // Event Listeners
-const body = document.body;
 body.addEventListener('click', e => handleChoice(e));
+recipeSection.addEventListener('click', e => handleRecipeExpand(e));
+
+
 
 
 // List of Food Items to be rendered as buttons
@@ -71,6 +75,11 @@ init();
 // 		console.log(recipe.title, recipe.href, recipe.ingredients, recipe.thumbnail)
 // 	});
 // }
+
+// Expand recipe Selection
+function handleRecipeExpand(e) {
+	console.log(e);
+}
 
 // Create Buttons
 function createButtons(array, buttonContainer) {
@@ -100,8 +109,10 @@ function appendRecipeCard(recipe, recipeContainer) {
 																</div>
 														</div>`;
 
-	recipeContainer.appendChild(newRecipeCard)
+	recipeContainer.appendChild(newRecipeCard);
 }
+
+
 
 // Initialization Function
 function init() {
