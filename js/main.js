@@ -46,23 +46,12 @@ function fetchData() {
 				reject('server error')
 			}
 		})
-		.then(data => console.dir(data.results));
+		.then(data => {
+			let results = data.results;
+			createRecipeCard(results, recipeSection);
+		});
 }
-
-
-
 // Functions 
-
-// Parse JSON data
-// let recipeJson = JSON.parse(recipes);
-
-
-// handle recipes is not necessary until I fix fetch.
-// function handleRecipes() {
-// 	recipes.forEach(recipe => {
-// 		console.log(recipe.title, recipe.href, recipe.ingredients, recipe.thumbnail)
-// 	});
-// }
 
 // Expand recipe Selection
 function handleRecipeExpand(e) {
@@ -124,9 +113,7 @@ function handleChoice(e) {
 			proteinChoice = null;
 		} else {
 			proteinChoice = id;
-		}
-
-	
+		}	
 	} 
 
 	// console.log('all lists', mealChoice, fridgeChoice, proteinChoice);
@@ -136,7 +123,6 @@ function handleChoice(e) {
 function init() {
 	render();
 	fetchData();
-
 	// find a better home for this since you wont have this data until after sending a request once you get your data working.
 	// handleRecipes();
 }
@@ -146,7 +132,7 @@ function render() {
 	createButtons(mealList, mealSelect);
 	createButtons(fridgeList, fridgeItemsSelect);
 	createButtons(proteinList,proteinSelect);
-	createRecipeCard(recipes, recipeSection);
+	// createRecipeCard(recipes, recipeSection);
 }
 
 
