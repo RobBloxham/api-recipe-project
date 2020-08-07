@@ -36,11 +36,9 @@ function handleChoice(e) {
 			proteinChoice = id;
 		}
 	} 
-	console.log(mealChoice);
-	console.log(fridgeChoice);
-	console.log(proteinChoice);
-	
-	}
+
+	console.log(mealChoice, fridgeChoice, proteinChoice);
+}
 
 	
 
@@ -56,7 +54,7 @@ const recipeSection = document.getElementById('returned-recipes');
 // Event Listeners
 const body = document.body;
 body.addEventListener('click', e => handleChoice(e));
-// use handleChoice as callback
+
 
 // List of Food Items to be rendered as buttons
 const mealList = ['sandwich', 'soup', 'salad', 'baked', 'fried', 'slow cooked'];
@@ -67,11 +65,12 @@ const proteinList = ['chicken', 'fish', 'egg', 'tofu', 'beef'];
 init();
 
 // Functions 
-function handleRecipes() {
-	recipes.forEach(recipe => {
-		console.log(recipe.title, recipe.href, recipe.ingredients, recipe.thumbnail)
-	});
-}
+// handle recipes is not necessary until I fix fetch.
+// function handleRecipes() {
+// 	recipes.forEach(recipe => {
+// 		console.log(recipe.title, recipe.href, recipe.ingredients, recipe.thumbnail)
+// 	});
+// }
 
 // Create Buttons
 function createButtons(array, buttonContainer) {
@@ -81,9 +80,9 @@ function createButtons(array, buttonContainer) {
 function appendButton(foodItem, buttonContainer) {
 	let newButton = document.createElement("button");
 	newButton.id = `${foodItem}`;
-	newButton.innerHTML = `
-										${foodItem}
-	`
+	newButton.type = "button";
+	newButton.setAttribute("class", "btn btn-secondary")
+	newButton.innerHTML = `${foodItem}`;
 	buttonContainer.appendChild(newButton);
 }
 
@@ -93,29 +92,22 @@ function createRecipeCard(recipeArray, recipeContainer) {
 
 function appendRecipeCard(recipe, recipeContainer) {
 	let newRecipeCard = document.createElement("div");
-	newRecipeCard.innerHTML = `<div class="recipeCard" id="${recipe.title.toLowerCase()}">
-															<div>
+	newRecipeCard.innerHTML = `<div class="card-body" class="recipeCard" id="${recipe.title.toLowerCase()}">
 																<img width="50" height="50" id="${recipe.title.toLowerCase()}" src=${recipe.thumbnail}>
 																<div>
 																	<h1>${recipe.title}</h1>
 																	<h2>${recipe.ingredients}</h2>
 																</div>
-															</div>	
 														</div>`;
 
 	recipeContainer.appendChild(newRecipeCard)
-	console.dir(typeof(recipe.ingredients));
 }
-
-
-
-
 
 // Initialization Function
 function init() {
 	render();
 	// find a better home for this since you wont have this data until after sending a request once you get your data working.
-	handleRecipes();
+	// handleRecipes();
 	
 }
 
@@ -128,14 +120,19 @@ function render() {
 }
 
 
+
 // *Style Buttons
 
 // * Send request to Recipe Puppy for Meal Type and Primary Protein.
 // // issue with request, CORs, I took a snapshot and will show it to instructors.
 
 
-// * Iterate through array of recipe objects and render template recipe card to DOM using appendChild.
-// * Create a template recipe thumbnail card using bootstram or materialize.
+
+//ask david why element.class = "doesnt work" when element.id = "does work" , instead I had to use setAtrribute('class', 'btn btn-primary')
+
+
+// *
+
 // * Create expanded template recipe card.
 // * Create Shopping list template.
 // * Listen for click event on rendered recipe card and jump to expanded recipe card.
