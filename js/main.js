@@ -1,6 +1,6 @@
 
 // Arrays and Variables
-let mealChoice = [];
+let mealChoice;
 let fridgeChoice = [];
 let proteinChoice;
 let recipeResults = null;
@@ -49,7 +49,8 @@ function checkReady() {
 // Create request string
 function createRequestString() {
 	if (proteinChoice) {
-		endpoint = `https://recipepuppyproxy.herokuapp.com/api/?i=${proteinChoice}&p=3`;
+		endpoint = `https://recipepuppyproxy.herokuapp.com/api/?i=${proteinChoice}&q=${mealChoice}&p=3`;
+		console.log('endpoint',endpoint)
 		return endpoint;
 	}
 }
@@ -120,9 +121,6 @@ function appendRecipeCard(recipe, recipeContainer) {
 }
 
 function appendExpandedRecipeCard(results, id) {
-	// take the recipeCard id (which is the title)
-	// match it to the data in 
-	
 	let selectedRecipe = results.filter(recipe => recipe.title.toLowerCase() === id);
 	let expandedRecipeCard = document.createElement("div");
 	expandedRecipeCard.setAttribute('class', 'card');
@@ -145,10 +143,10 @@ function handleChoice(e) {
 	const parent = e.target.parentElement.id;
 	// match the container to the appropriate array
 	if (parent === 'select-meal') {
-		if (mealChoice.includes(id)) {
-			mealChoice.splice(mealChoice.indexOf(id));
+		if (mealChoice) {
+			mealChoice = null;
 		} else if (mealList.includes(id)) {
-			mealChoice.push(id) ;
+			mealChoice = id ;
 		}
 	} 
 	if (parent === 'select-fridge-items') {
@@ -166,7 +164,6 @@ function handleChoice(e) {
 			proteinChoice = id;
 		}	
 	} 
-	console.log(proteinChoice)
 }
 
 
@@ -185,18 +182,10 @@ function render() {
 }
 
 
-
-// * Create expanded template recipe card.
-
-// Create request based off of user inputs.
-// * Send request to Recipe Puppy for Meal Type and Primary Protein.
-// // issue with request, CORs, I took a snapshot and will show it to instructors.
-//ask david why element.class = "doesnt work" when element.id = "does work" , instead I had to use setAtrribute('class', 'btn btn-primary')
-
 // * Create Shopping list template.
-// * Listen for click event on rendered recipe card and jump to expanded recipe card.
+// * Jump to appended card
 // * Listen to click event on Shopping List button to render Shopping List Template.
-// recipe.ingredients is a string, parse by , and add to an array.
+
 
 // Stretch Goals
 // Interaction
