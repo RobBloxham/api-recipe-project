@@ -70,7 +70,6 @@ function fetchData() {
 			.then(data => {
 				let results = data.results;
 				cleanData(results);
-				console.log('cleaned',results.forEach(result => console.log(result.ingredients)))
 				createRecipeCard(results, recipeSection);
 				expandCard(results)
 			});
@@ -81,9 +80,8 @@ function fetchData() {
 function cleanData(data) {
 	data.forEach(recipe => {
 		recipe.ingredients = recipe.ingredients.split(',');
-		return recipe;
 	});
-	return;
+	return data;
 }
 
 function expandCard(results) {
@@ -93,7 +91,6 @@ function expandCard(results) {
 			appendExpandedRecipeCard(results, e.target.id);
 		})
 	}
-	
 }
 
 
@@ -112,7 +109,11 @@ function appendButton(foodItem, buttonContainer) {
 }
 
 function createRecipeCard(recipeArray, recipeContainer) {
-	recipeArray.forEach(recipe => appendRecipeCard(recipe, recipeContainer));
+	recipeArray.forEach(recipe => {
+		appendRecipeCard(recipe, recipeContainer);
+		createList(recipe);
+	});
+	
 }
 
 function appendRecipeCard(recipe, recipeContainer) {
@@ -120,11 +121,24 @@ function appendRecipeCard(recipe, recipeContainer) {
 	newRecipeCard.setAttribute('class','card-body recipe-card');
 	newRecipeCard.id = recipe.title.toLowerCase();
 	newRecipeCard.innerHTML = `<img width="50" height="50" id="${recipe.title.toLowerCase()}" src=${recipe.thumbnail}>
-														<div>
-															<h1>${recipe.title}</h1>
-															<h2>${recipe.ingredients}</h2>
+														<h1>${recipe.title}</h1>
+														<div class="list-container">
 														</div>`;
 	recipeContainer.appendChild(newRecipeCard);
+}
+
+function createList(recipe) {
+	const divs = document.getElementsByClassName('list-container');
+	for (let i = 0; i < divs.length; i++) {
+		const ul = document.createElement('ul');
+		divs[i].appendChild(ul);
+		const li = document.createElement('li');
+		
+		recipe.ingredients.forEach(ingredient => {
+			li.innerHTML = ingredient;
+			ul.appendChild(li);
+		})
+	}
 }
 
 function appendExpandedRecipeCard(results, id) {
