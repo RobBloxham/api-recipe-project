@@ -78,5 +78,9 @@ body {
 } */ 
 
 .recipe-card {
-	board: 5px solid black;
+	border: 5px solid black;
 }
+
+/* .clicked {
+	background-color: cornflowerblue;
+} */

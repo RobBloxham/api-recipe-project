@@ -24,7 +24,7 @@ const proteinSelect = document.getElementById('select-primary-protein');
 const searchRecipesButton = document.getElementById('search-recipes');
 const recipeSection = document.getElementById('returned-recipes');
 const recipeCards = document.getElementsByClassName('recipe-card');
-const createShoppingListButton = document.getElementById('create-shopping-list');
+// const createShoppingListButton = document.getElementById('create-shopping-list');
 const returnToRecipesButton = document.getElementById('return-to-recipes');
 
 
@@ -69,20 +69,28 @@ function fetchData() {
 			})
 			.then(data => {
 				let results = data.results;
-				recipeResults = results;
+				cleanData(results);
+				console.log('cleaned',results.forEach(result => console.log(result.ingredients)))
 				createRecipeCard(results, recipeSection);
 				expandCard(results)
-				return recipeResults;
 			});
 	}
 	
 }
 
+function cleanData(data) {
+	data.forEach(recipe => {
+		recipe.ingredients = recipe.ingredients.split(',');
+		return recipe;
+	});
+	return;
+}
+
 function expandCard(results) {
 	for (let i=0; i<recipeCards.length;i++) {
 		recipeCards[i].addEventListener('click', e => {
+			recipeCards[i].style.backgroundColor = 'red';
 			appendExpandedRecipeCard(results, e.target.id);
-			return;
 		})
 	}
 	
@@ -137,8 +145,30 @@ function appendExpandedRecipeCard(results, id) {
 			</div>`
 	main.appendChild(expandedRecipeCard);
 	let createShoppingList = document.getElementById('create-shopping-list');
-	createShoppingList.addEventListener('click', e => console.log(e))
+	createShoppingList.addEventListener('click', e => appendShoppingList(e));
+	let returnToRecipesButton = document.getElementById('return-to-recipes');
+	returnToRecipesButton.addEventListener('click', e => removeExpandedCard(e, expandedRecipeCard));
 }
+
+function removeExpandedCard(e, expandedRecipeCard) {
+	main.removeChild(expandedRecipeCard)
+}
+
+function appendShoppingList(e) {
+	let shoppingList = document.createElement("div");
+	shoppingList.setAttribute('class', 'card');
+	shoppingList.id="shopping-list";
+	shoppingList.innerHTML = `
+		<ul>
+			<li>Ingredient</li>
+			<li>Ingredient</li>
+			<li>Ingredient</li>
+			<li>Ingredient</li>
+		</ul>
+	`;
+	main.appendChild(shoppingList);
+}
+
 
 function handleChoice(e) {
 	// get the container that the id is in
@@ -186,20 +216,24 @@ function update() {
 }
 
 // [X]] add confirm or return button to appended recipe.
-	// [] add cached element references for each  button
-	// [] add event listeners to buttons.
-	// [] confirm creates a shopping list
 	// [] return removes the recipe, changes the color of the recipe card back to white, and shows the rest of the recipes.
-// * Create Shopping list template.
-// * Change color of returned recipe card background when selected.
+	// add a button for dont like!, remove card from list, keep browsing. 
+	// add a maybe button that changes the color to something.
+
 // * Jump to appended card
-// * Listen to click event on Shopping List button to render Shopping List Template.
-// * Check the returned recipe ingredients to see what ingredients match from my fridge.
 // * highlight the items in the returned recipe-card that already exist in your fridge ingredients array.
 // * If a request returns a recipe with no thumbnail, generate an image with the recipe.title and render that instead.
 
 
-// fridge items are added to thei
+// cleaning JSON data
+	// go through every title and remove \r\n\t
+	// check if thumbnails is empty and relpace
+	// iterate through results.ingredients and results.ingredients.split(','), to get an array of ingredients in the object.
+// iterate through results.ingredients array and render to unordered list on recipe card.
+// iterate through results.ingredients array and render to shopping list.
+// * Check the returned recipe ingredients to see what ingredients match from my fridge.
+
+
 
 
 // Stretch Goals

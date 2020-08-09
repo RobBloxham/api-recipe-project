@@ -107,3 +107,16 @@ in most browser configurations this will be 10px */
 font-size: 62.5%
 } */
 ```
+
+
+```js
+function hasNullValue(obj) {
+  for (let key in obj) {
+    if (obj[key] === null) return true
+  }
+
+  return false
+}
+```
+
+check if the JSon key -> value has a value at all. if its empty do something with it.
