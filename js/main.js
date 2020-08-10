@@ -2,10 +2,10 @@
 let mealChoice;
 let fridgeChoice = [];
 let proteinChoice;
-let recipeResults = null;
 let start;
 let expanded;
 let endpoint;
+let returnedResults = null;
 
 
 
@@ -24,7 +24,6 @@ const proteinSelect = document.getElementById('select-primary-protein');
 const searchRecipesButton = document.getElementById('search-recipes');
 const recipeSection = document.getElementById('returned-recipes');
 const recipeCards = document.getElementsByClassName('recipe-card');
-// const createShoppingListButton = document.getElementById('create-shopping-list');
 const returnToRecipesButton = document.getElementById('return-to-recipes');
 
 
@@ -33,6 +32,7 @@ init();
 // Event Listeners
 body.addEventListener('click', e => handleChoice(e));
 searchRecipesButton.addEventListener('click', fetchData);
+
 
 
 function createShoppingList() {
@@ -53,6 +53,9 @@ function createRequestString() {
 	}
 }
 
+// function render() {
+	
+// }
 // Fetch Data
 function fetchData() {
 	if (proteinChoice) {
@@ -70,16 +73,26 @@ function fetchData() {
 			.then(data => {
 				let results = data.results;
 				cleanData(results);
-				createRecipeCard(results, recipeSection);
-				expandCard(results)
+				returnedResults = results;
+				update();
+				return returnedResults;
 			});
 	}
-	
+}
+
+function update() {
+	createRecipeCard(returnedResults, recipeSection);
+	expandCard(returnedResults);
 }
 
 function cleanData(data) {
 	data.forEach(recipe => {
+		recipe.title = recipe.title.replace(/\r\n|\n|\r|\t/gm,'');
 		recipe.ingredients = recipe.ingredients.split(',');
+		if (recipe.thumbnail === "") {
+			// this is temporary, you will replace this with a generated photo eventually.
+			recipe.thumbnail = "https://picsum.photos/50";
+		}
 	});
 	return data;
 }
@@ -88,6 +101,8 @@ function expandCard(results) {
 	for (let i=0; i<recipeCards.length;i++) {
 		recipeCards[i].addEventListener('click', e => {
 			recipeCards[i].style.backgroundColor = 'red';
+			// console.log('results yayyy',results)
+			// console.log('recipe card id',e.target.id)
 			appendExpandedRecipeCard(results, e.target.id);
 		})
 	}
@@ -111,55 +126,72 @@ function appendButton(foodItem, buttonContainer) {
 function createRecipeCard(recipeArray, recipeContainer) {
 	recipeArray.forEach(recipe => {
 		appendRecipeCard(recipe, recipeContainer);
-		createList(recipe);
 	});
-	
+	const listContainers = document.getElementsByClassName('list-container');
+	for (let i = 0; i < listContainers.length; i++) {
+		const ul = document.createElement('ul')
+		ul.setAttribute('class','unordered-list');
+		listContainers[i].appendChild(ul);
+	}
+	const unorderedList = document.getElementsByClassName('unordered-list');
+
+	for (x = 0; x < unorderedList.length; x++) {
+		recipeArray[x].ingredients.forEach(ingredient => {
+			const li = document.createElement('li');
+			li.innerHTML = ingredient;
+			unorderedList[x].appendChild(li);
+		})
+	}
 }
+
+// unorderedList[y].appendChild(li);
 
 function appendRecipeCard(recipe, recipeContainer) {
 	let newRecipeCard = document.createElement("div");
 	newRecipeCard.setAttribute('class','card-body recipe-card');
 	newRecipeCard.id = recipe.title.toLowerCase();
-	newRecipeCard.innerHTML = `<img width="50" height="50" id="${recipe.title.toLowerCase()}" src=${recipe.thumbnail}>
-														<h1>${recipe.title}</h1>
-														<div class="list-container">
-														</div>`;
+	newRecipeCard.innerHTML = `
+		<img width="50" height="50" id="${recipe.title.toLowerCase()}" src=${recipe.thumbnail}>
+		<h1>${recipe.title}</h1>
+		<div class="list-container">
+		</div>`;
 	recipeContainer.appendChild(newRecipeCard);
 }
 
-function createList(recipe) {
-	const divs = document.getElementsByClassName('list-container');
-	for (let i = 0; i < divs.length; i++) {
-		const ul = document.createElement('ul');
-		divs[i].appendChild(ul);
-		const li = document.createElement('li');
-		
-		recipe.ingredients.forEach(ingredient => {
-			li.innerHTML = ingredient;
-			ul.appendChild(li);
-		})
-	}
-}
+// function createList(recipe) {
+// 	const divs = document.getElementsByClassName('list-container');
+// 	console.log(divs);
+// 	for (let i = 0; i < divs.length; i++) {
+// 		const ul = document.createElement('ul');
+// 		divs[i].appendChild(ul);
+// 	}
+	// recipe.ingredients.forEach(ingredient => {
+	// 	const li = document.createElement('li');
+	// 	li.innerHTML = ingredient;
+	// 	ul.appendChild(li);
+	// })
+// }
 
 function appendExpandedRecipeCard(results, id) {
+	// console.log('expanded card results', results);
 	let selectedRecipe = results.filter(recipe => recipe.title.toLowerCase() === id);
+	console.log('selectedRecip', selectedRecipe);
 	let expandedRecipeCard = document.createElement("div");
 	expandedRecipeCard.setAttribute('class', 'card');
 	expandedRecipeCard.id ="selected-recipe";
 	expandedRecipeCard.innerHTML = `
 	<div class="card-body">
-				<img class="card-img-top"width="200" height="200" src=${selectedRecipe[0].thumbnail}>
-				<h1>You chose ${selectedRecipe[0].title}</h1>
-				<h2>${selectedRecipe[0].ingredients}</h2>
-				<div>
-					<button id="create-shopping-list">Create Shopping List</button>
-					<button id="return-to-recipes">Return to Recipes</button>
-				</div>
-				
-			</div>`
+		<img class="card-img-top"width="200" height="200" src=${selectedRecipe[0].thumbnail}>
+		<h1>You chose ${selectedRecipe[0].title}</h1>
+		<h2>${selectedRecipe[0].ingredients}</h2>
+		<div>
+			<button id="create-shopping-list">Create Shopping List</button>
+			<button id="return-to-recipes">Return to Recipes</button>
+		</div>
+	</div>`
 	main.appendChild(expandedRecipeCard);
 	let createShoppingList = document.getElementById('create-shopping-list');
-	createShoppingList.addEventListener('click', e => appendShoppingList(e));
+	createShoppingList.addEventListener('click', e => appendShoppingList(e, selectedRecipe[0]));
 	let returnToRecipesButton = document.getElementById('return-to-recipes');
 	returnToRecipesButton.addEventListener('click', e => removeExpandedCard(e, expandedRecipeCard));
 }
@@ -168,19 +200,29 @@ function removeExpandedCard(e, expandedRecipeCard) {
 	main.removeChild(expandedRecipeCard)
 }
 
-function appendShoppingList(e) {
+function appendShoppingList(e, recipe) {
 	let shoppingList = document.createElement("div");
 	shoppingList.setAttribute('class', 'card');
 	shoppingList.id="shopping-list";
 	shoppingList.innerHTML = `
-		<ul>
-			<li>Ingredient</li>
-			<li>Ingredient</li>
-			<li>Ingredient</li>
-			<li>Ingredient</li>
+		<ul id="shopping-list-ul">
+		
 		</ul>
 	`;
 	main.appendChild(shoppingList);
+
+	const unorderedList = document.getElementById('shopping-list-ul');
+	recipe.ingredients.forEach(ingredient => {
+		const li = document.createElement('li');
+		li.innerHTML = ingredient;
+		unorderedList.appendChild(li);
+	})
+
+	//take the id of the recipe clicked on
+	//match the id of the clicked recipe to A title of the objects in the returnedResults
+	//loop through the ingredients of that recipe 
+	// create an li
+	// append an li to ul #shopping-list
 }
 
 
@@ -225,26 +267,16 @@ function renderButtons() {
 	createButtons(proteinList,proteinSelect);
 }
 
-function update() {
-	// 
-}
 
 // [X]] add confirm or return button to appended recipe.
-	// [] return removes the recipe, changes the color of the recipe card back to white, and shows the rest of the recipes.
-	// add a button for dont like!, remove card from list, keep browsing. 
-	// add a maybe button that changes the color to something.
+// 	add a button for dont like!, remove card from list, keep browsing. 
+// 	add a maybe button that changes the color to something.
 
 // * Jump to appended card
 // * highlight the items in the returned recipe-card that already exist in your fridge ingredients array.
 // * If a request returns a recipe with no thumbnail, generate an image with the recipe.title and render that instead.
 
-
-// cleaning JSON data
-	// go through every title and remove \r\n\t
-	// check if thumbnails is empty and relpace
-	// iterate through results.ingredients and results.ingredients.split(','), to get an array of ingredients in the object.
-// iterate through results.ingredients array and render to unordered list on recipe card.
-// iterate through results.ingredients array and render to shopping list.
+// add some more to shopping list template.
 // * Check the returned recipe ingredients to see what ingredients match from my fridge.
 
 
