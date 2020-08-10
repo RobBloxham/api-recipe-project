@@ -7,9 +7,6 @@ let expanded;
 let endpoint;
 let returnedResults = null;
 
-
-
-
 // List of Food Items to be rendered as buttons
 const mealList = ['sandwich', 'soup', 'salad', 'baked', 'fried', 'slow cooked'];
 const fridgeList = ['lettuce', 'tomato', 'pickles', 'chicken', 'mustard', 'ketchup', 'cheese', 'butter', 'cabbage'];
@@ -33,17 +30,6 @@ init();
 body.addEventListener('click', e => handleChoice(e));
 searchRecipesButton.addEventListener('click', fetchData);
 
-
-
-function createShoppingList() {
-	console.log('shopping list created!');
-}
-
-
-function handleSelectedRecipe(e) {
-	console.log('recipe selected',e)
-}
-
 // Create request string
 function createRequestString() {
 	if (proteinChoice) {
@@ -53,11 +39,12 @@ function createRequestString() {
 	}
 }
 
-// function render() {
-	
-// }
 // Fetch Data
 function fetchData() {
+	// what do my choice arrays looks like before i fetch the data?
+	console.log('mealchoic', mealChoice);
+	console.log('proteinchoice', proteinChoice);
+	console.log('fridge items', fridgeChoice);
 	if (proteinChoice) {
 		createRequestString();
 		let url = endpoint;
@@ -139,12 +126,11 @@ function createRecipeCard(recipeArray, recipeContainer) {
 		recipeArray[x].ingredients.forEach(ingredient => {
 			const li = document.createElement('li');
 			li.innerHTML = ingredient;
+			fridgeChoice.includes(ingredient) ? li.setAttribute('class', 'exists') : li.setAttribute('class', 'empty');
 			unorderedList[x].appendChild(li);
 		})
 	}
 }
-
-// unorderedList[y].appendChild(li);
 
 function appendRecipeCard(recipe, recipeContainer) {
 	let newRecipeCard = document.createElement("div");
@@ -158,19 +144,6 @@ function appendRecipeCard(recipe, recipeContainer) {
 	recipeContainer.appendChild(newRecipeCard);
 }
 
-// function createList(recipe) {
-// 	const divs = document.getElementsByClassName('list-container');
-// 	console.log(divs);
-// 	for (let i = 0; i < divs.length; i++) {
-// 		const ul = document.createElement('ul');
-// 		divs[i].appendChild(ul);
-// 	}
-	// recipe.ingredients.forEach(ingredient => {
-	// 	const li = document.createElement('li');
-	// 	li.innerHTML = ingredient;
-	// 	ul.appendChild(li);
-	// })
-// }
 
 function appendExpandedRecipeCard(results, id) {
 	// console.log('expanded card results', results);
@@ -211,18 +184,15 @@ function appendShoppingList(e, recipe) {
 	`;
 	main.appendChild(shoppingList);
 
+	// add ingredients to shopping list
 	const unorderedList = document.getElementById('shopping-list-ul');
 	recipe.ingredients.forEach(ingredient => {
+		// does ingredient exist in fridge?
 		const li = document.createElement('li');
 		li.innerHTML = ingredient;
+		fridgeChoice.includes(ingredient) ? li.setAttribute('class', 'exists') : li.setAttribute('class', 'empty');
 		unorderedList.appendChild(li);
-	})
-
-	//take the id of the recipe clicked on
-	//match the id of the clicked recipe to A title of the objects in the returnedResults
-	//loop through the ingredients of that recipe 
-	// create an li
-	// append an li to ul #shopping-list
+	});
 }
 
 
@@ -275,6 +245,7 @@ function renderButtons() {
 // * Jump to appended card
 // * highlight the items in the returned recipe-card that already exist in your fridge ingredients array.
 // * If a request returns a recipe with no thumbnail, generate an image with the recipe.title and render that instead.
+// make sure that it is not possible to add multiple expanded cards.
 
 // add some more to shopping list template.
 // * Check the returned recipe ingredients to see what ingredients match from my fridge.

@@ -84,3 +84,11 @@ body {
 /* .clicked {
 	background-color: cornflowerblue;
 } */
+
+.exists {
+	color: red;
+}
+
+.empty {
+	color: blue;
+}
