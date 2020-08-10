@@ -126,18 +126,6 @@ check if the JSon key -> value has a value at all. if its empty do something wit
 <!-- Compiled and minified CSS -->
 ```html
    
-
-Materialize:
-Uses a container class. set to ~70% of the window width. <div class="container">
-
-
-
-
--- materialize expand
-
--- make recipe cards slightly different
-- add extra card for lists?
-
 Cards
 <div class="card blue-grey darken-1">
         <div class="card-content white-text">
@@ -152,6 +140,28 @@ buttons
 <a class="waves-effect waves-teal btn-flat">Button</a>
 ```
         
-Chose card color
-chose button color
-chose text color
+
+// [x]add collapsible functionality to recipe cards
+// [] remove code to do with expanded card and refactor.
+// [] Dont forget to style collapsilbe list items with the same colors.
+// []Give this thing a title and add a menu bar.
+// * Chose card color
+// * chose button color
+// * chose text color
+//  * add confirm or return button to appended recipe.
+// 	* add a button for dont like!, remove card from list, keep browsing. 
+// 	* add a maybe button that changes the color to something.
+// * Jump to appended card
+// * highlight the items in the returned recipe-card that already exist in your fridge ingredients array.
+// * If a request returns a recipe with no thumbnail, generate an image with the recipe.title and render that instead.
+// * make sure that it is not possible to add multiple expanded cards.
+// * add some more to shopping list template.
+// * Check the returned recipe ingredients to see what ingredients match from my fridge.
+
+// Stretch Goals
+// Interaction
+// handle if user selects too many proteins.
+// CORS Anywhere NODE proxy
+
+```js
+

@@ -25,10 +25,15 @@ const returnToRecipesButton = document.getElementById('return-to-recipes');
 
 
 init();
-
+// const options;
 // Event Listeners
 body.addEventListener('click', e => handleChoice(e));
 searchRecipesButton.addEventListener('click', fetchData);
+// Materialzie Collapsible
+document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.collapsible');
+    var instances = M.Collapsible.init(elems);
+  });
 
 // Create Buttons
 function createButtons(array, buttonContainer) {
@@ -124,7 +129,7 @@ function cleanData(data) {
 
 function update() {
 	createRecipeCard(returnedResults, recipeSection);
-	expandCard(returnedResults);
+	// expandCard(returnedResults);
 }
 
 function createRecipeCard(recipeArray, recipeContainer) {
@@ -150,17 +155,22 @@ function createRecipeCard(recipeArray, recipeContainer) {
 }
 
 function appendRecipeCard(recipe, recipeContainer) {
-	let newRecipeCard = document.createElement("div");
-	newRecipeCard.setAttribute('class','card cyan darken-2 recipe-card');
+	let newRecipeCard = document.createElement("li");
+	// newRecipeCard.setAttribute('class','card cyan darken-2 recipe-card');
 	newRecipeCard.id = recipe.title.toLowerCase();
 	newRecipeCard.innerHTML = `
+	<div class="collapsible-header">
 		<img width="50" height="50" id="${recipe.title.toLowerCase()}" src=${recipe.thumbnail}>
 		<h1>${recipe.title}</h1>
-		<div class="card-content white-text list-container">
-		</div>`;
+	</div>
+	<div class="list-container collapsible-body">
+		<h1>Ingredients</h1>
+	</div> `;
 	recipeContainer.appendChild(newRecipeCard);
 }
 
+
+// No longer necessary!
 function expandCard(results) {
 	for (let i=0; i<recipeCards.length;i++) {
 		recipeCards[i].addEventListener('click', e => {
@@ -172,29 +182,29 @@ function expandCard(results) {
 	}
 }
 
-function appendExpandedRecipeCard(results, id) {
-	// console.log('expanded card results', results);
-	let selectedRecipe = results.filter(recipe => recipe.title.toLowerCase() === id);
-	console.log('selectedRecip', selectedRecipe);
-	let expandedRecipeCard = document.createElement("div");
-	expandedRecipeCard.setAttribute('class', 'card');
-	expandedRecipeCard.id ="selected-recipe";
-	expandedRecipeCard.innerHTML = `
-	<div class="card-body">
-		<img class="card-img-top"width="200" height="200" src=${selectedRecipe[0].thumbnail}>
-		<h1>You chose ${selectedRecipe[0].title}</h1>
-		<h2>${selectedRecipe[0].ingredients}</h2>
-		<div>
-			<a class="waves-effect waves-light red btn" id="create-shopping-list">Create Shopping List</a>
-			<a id="return-to-recipes">Return to Recipes</a>
-		</div>
-	</div>`
-	main.appendChild(expandedRecipeCard);
-	let createShoppingList = document.getElementById('create-shopping-list');
-	createShoppingList.addEventListener('click', e => appendShoppingList(e, selectedRecipe[0]));
-	let returnToRecipesButton = document.getElementById('return-to-recipes');
-	returnToRecipesButton.addEventListener('click', e => removeExpandedCard(e, expandedRecipeCard));
-}
+// function appendExpandedRecipeCard(results, id) {
+// 	// console.log('expanded card results', results);
+// 	let selectedRecipe = results.filter(recipe => recipe.title.toLowerCase() === id);
+// 	console.log('selectedRecip', selectedRecipe);
+// 	let expandedRecipeCard = document.createElement("div");
+// 	expandedRecipeCard.setAttribute('class', 'card');
+// 	expandedRecipeCard.id ="selected-recipe";
+// 	expandedRecipeCard.innerHTML = `
+// 	<div class="card-body">
+// 		<img class="card-img-top"width="200" height="200" src=${selectedRecipe[0].thumbnail}>
+// 		<h1>You chose ${selectedRecipe[0].title}</h1>
+// 		<h2>${selectedRecipe[0].ingredients}</h2>
+// 		<div>
+// 			<a class="waves-effect waves-light red btn" id="create-shopping-list">Create Shopping List</a>
+// 			<a id="return-to-recipes">Return to Recipes</a>
+// 		</div>
+// 	</div>`
+// 	main.appendChild(expandedRecipeCard);
+// 	let createShoppingList = document.getElementById('create-shopping-list');
+// 	createShoppingList.addEventListener('click', e => appendShoppingList(e, selectedRecipe[0]));
+// 	let returnToRecipesButton = document.getElementById('return-to-recipes');
+// 	returnToRecipesButton.addEventListener('click', e => removeExpandedCard(e, expandedRecipeCard));
+// }
 
 function removeExpandedCard(e, expandedRecipeCard) {
 	main.removeChild(expandedRecipeCard)
@@ -239,26 +249,4 @@ function renderButtons() {
 	createButtons(fridgeList, fridgeItemsSelect);
 	createButtons(proteinList,proteinSelect);
 }
-
-
-// [X]] add confirm or return button to appended recipe.
-// 	add a button for dont like!, remove card from list, keep browsing. 
-// 	add a maybe button that changes the color to something.
-
-// * Jump to appended card
-// * highlight the items in the returned recipe-card that already exist in your fridge ingredients array.
-// * If a request returns a recipe with no thumbnail, generate an image with the recipe.title and render that instead.
-// make sure that it is not possible to add multiple expanded cards.
-
-// add some more to shopping list template.
-// * Check the returned recipe ingredients to see what ingredients match from my fridge.
-
-
-
-
-// Stretch Goals
-// Interaction
-// handle if user selects too many proteins.
-// CORS Anywhere NODE proxy
-
 
