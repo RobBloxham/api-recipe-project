@@ -120,3 +120,31 @@ function hasNullValue(obj) {
 ```
 
 check if the JSon key -> value has a value at all. if its empty do something with it.
+
+
+<!-- Materialize CDN Links -->
+<!-- Compiled and minified CSS -->
+```html
+   
+
+Materialize:
+Uses a container class. set to ~70% of the window width. <div class="container">
+
+-- duplicate code base to experiment with materialize
+-- add materialize cdn
+-- remove bootstrap cdn
+-- add materilize cards
+-- add materialize buttons
+-- materialize expand
+
+-- make recipe cards slightly different
+
+Cards
+<div class="card blue-grey darken-1">
+        <div class="card-content white-text">
+          <span class="card-title">Card Title</span>
+
+          #0097a7 cyan darken-2
+
+          card cyan darken-2
+          card-content white-text

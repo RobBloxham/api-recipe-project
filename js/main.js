@@ -30,7 +30,52 @@ init();
 body.addEventListener('click', e => handleChoice(e));
 searchRecipesButton.addEventListener('click', fetchData);
 
-// Create request string
+// Create Buttons
+function createButtons(array, buttonContainer) {
+	array.forEach(foodItem => appendButton(foodItem, buttonContainer));
+}
+
+function appendButton(foodItem, buttonContainer) {
+	let newButton = document.createElement("button");
+	newButton.id = `${foodItem}`;
+	newButton.type = "button";
+	newButton.setAttribute("class", "btn btn-secondary")
+	newButton.innerHTML = `${foodItem}`;
+	buttonContainer.appendChild(newButton);
+}
+
+// Handle button choices
+function handleChoice(e) {
+	// get the container that the id is in
+	const id = e.target.id;
+	const parent = e.target.parentElement.id;
+	// match the container to the appropriate array
+	if (parent === 'select-meal') {
+		if (mealChoice) {
+			mealChoice = null;
+		} else if (mealList.includes(id)) {
+			mealChoice = id ;
+		}
+	} 
+	if (parent === 'select-fridge-items') {
+		if (fridgeChoice.includes(id)) {
+			fridgeChoice.splice(fridgeChoice.indexOf(id));
+		}
+		else if (fridgeList.includes(id)) {
+			fridgeChoice.push(id) ;
+		}
+	}
+	if (parent === 'select-primary-protein') {	
+		if (proteinChoice === id) {
+			proteinChoice = null;
+		} else {
+			proteinChoice = id;
+		}	
+	} 
+}
+
+// Data Handling //
+// Create request string after buttons have been selected
 function createRequestString() {
 	if (proteinChoice) {
 		endpoint = `https://recipepuppyproxy.herokuapp.com/api/?i=${proteinChoice}&q=${mealChoice}&p=3`;
@@ -39,7 +84,7 @@ function createRequestString() {
 	}
 }
 
-// Fetch Data
+// Fetch Data and update recipe cards
 function fetchData() {
 	// what do my choice arrays looks like before i fetch the data?
 	console.log('mealchoic', mealChoice);
@@ -66,12 +111,6 @@ function fetchData() {
 			});
 	}
 }
-
-function update() {
-	createRecipeCard(returnedResults, recipeSection);
-	expandCard(returnedResults);
-}
-
 function cleanData(data) {
 	data.forEach(recipe => {
 		recipe.title = recipe.title.replace(/\r\n|\n|\r|\t/gm,'');
@@ -84,30 +123,9 @@ function cleanData(data) {
 	return data;
 }
 
-function expandCard(results) {
-	for (let i=0; i<recipeCards.length;i++) {
-		recipeCards[i].addEventListener('click', e => {
-			recipeCards[i].style.backgroundColor = 'red';
-			// console.log('results yayyy',results)
-			// console.log('recipe card id',e.target.id)
-			appendExpandedRecipeCard(results, e.target.id);
-		})
-	}
-}
-
-
-// Create Buttons
-function createButtons(array, buttonContainer) {
-	array.forEach(foodItem => appendButton(foodItem, buttonContainer));
-}
-
-function appendButton(foodItem, buttonContainer) {
-	let newButton = document.createElement("button");
-	newButton.id = `${foodItem}`;
-	newButton.type = "button";
-	newButton.setAttribute("class", "btn btn-secondary")
-	newButton.innerHTML = `${foodItem}`;
-	buttonContainer.appendChild(newButton);
+function update() {
+	createRecipeCard(returnedResults, recipeSection);
+	expandCard(returnedResults);
 }
 
 function createRecipeCard(recipeArray, recipeContainer) {
@@ -144,6 +162,16 @@ function appendRecipeCard(recipe, recipeContainer) {
 	recipeContainer.appendChild(newRecipeCard);
 }
 
+function expandCard(results) {
+	for (let i=0; i<recipeCards.length;i++) {
+		recipeCards[i].addEventListener('click', e => {
+			recipeCards[i].style.backgroundColor = 'red';
+			// console.log('results yayyy',results)
+			// console.log('recipe card id',e.target.id)
+			appendExpandedRecipeCard(results, e.target.id);
+		})
+	}
+}
 
 function appendExpandedRecipeCard(results, id) {
 	// console.log('expanded card results', results);
@@ -175,7 +203,7 @@ function removeExpandedCard(e, expandedRecipeCard) {
 
 function appendShoppingList(e, recipe) {
 	let shoppingList = document.createElement("div");
-	shoppingList.setAttribute('class', 'card');
+	shoppingList.setAttribute('class', 'card cyan darken-2');
 	shoppingList.id="shopping-list";
 	shoppingList.innerHTML = `
 		<ul id="shopping-list-ul">
@@ -188,41 +216,17 @@ function appendShoppingList(e, recipe) {
 	const unorderedList = document.getElementById('shopping-list-ul');
 	recipe.ingredients.forEach(ingredient => {
 		// does ingredient exist in fridge?
-		const li = document.createElement('li');
-		li.innerHTML = ingredient;
-		fridgeChoice.includes(ingredient) ? li.setAttribute('class', 'exists') : li.setAttribute('class', 'empty');
-		unorderedList.appendChild(li);
+		createListElements(ingredient, unorderedList)
 	});
 }
 
 
-function handleChoice(e) {
-	// get the container that the id is in
-	const id = e.target.id;
-	const parent = e.target.parentElement.id;
-	// match the container to the appropriate array
-	if (parent === 'select-meal') {
-		if (mealChoice) {
-			mealChoice = null;
-		} else if (mealList.includes(id)) {
-			mealChoice = id ;
-		}
-	} 
-	if (parent === 'select-fridge-items') {
-		if (fridgeChoice.includes(id)) {
-			fridgeChoice.splice(fridgeChoice.indexOf(id));
-		}
-		else if (fridgeList.includes(id)) {
-			fridgeChoice.push(id) ;
-		}
-	}
-	if (parent === 'select-primary-protein') {	
-		if (proteinChoice === id) {
-			proteinChoice = null;
-		} else {
-			proteinChoice = id;
-		}	
-	} 
+function createListElements(ingredient, unorderedList) {
+	const li = document.createElement('li');
+	li.innerHTML = ingredient;
+	fridgeChoice.includes(ingredient) ? li.setAttribute('class', 'exists') : li.setAttribute('class', 'empty');
+		unorderedList.appendChild(li);
+	return;
 }
 
 // Initialization Function
