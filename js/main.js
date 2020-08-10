@@ -129,12 +129,11 @@ function cleanData(data) {
 
 function update() {
 	createRecipeCard(returnedResults, recipeSection);
-	// expandCard(returnedResults);
 }
 
 function createRecipeCard(recipeArray, recipeContainer) {
-	recipeArray.forEach(recipe => {
-		appendRecipeCard(recipe, recipeContainer);
+	recipeArray.forEach((recipe, idx) => {
+		appendRecipeCard(recipe, idx, recipeContainer);
 	});
 	const listContainers = document.getElementsByClassName('list-container');
 	for (let i = 0; i < listContainers.length; i++) {
@@ -154,7 +153,11 @@ function createRecipeCard(recipeArray, recipeContainer) {
 	}
 }
 
-function appendRecipeCard(recipe, recipeContainer) {
+function appendRecipeCard(recipe, idx, recipeContainer) {
+	
+	let id = toString(idx);
+	console.log('id', idx)
+
 	let newRecipeCard = document.createElement("li");
 	// newRecipeCard.setAttribute('class','card cyan darken-2 recipe-card');
 	newRecipeCard.id = recipe.title.toLowerCase();
@@ -164,57 +167,24 @@ function appendRecipeCard(recipe, recipeContainer) {
 		<h1>${recipe.title}</h1>
 	</div>
 	<div class="list-container collapsible-body">
+		<a class="waves-effect waves-light red btn create-shopping-list" id="${idx}">Create Shopping List</a>
 		<h1>Ingredients</h1>
 	</div> `;
 	recipeContainer.appendChild(newRecipeCard);
+
+	let createShoppingList = document.getElementById(idx);
+	createShoppingList.addEventListener('click', e => appendShoppingList(recipe));
+	
 }
 
 
-// No longer necessary!
-function expandCard(results) {
-	for (let i=0; i<recipeCards.length;i++) {
-		recipeCards[i].addEventListener('click', e => {
-			recipeCards[i].style.backgroundColor = 'red';
-			// console.log('results yayyy',results)
-			// console.log('recipe card id',e.target.id)
-			appendExpandedRecipeCard(results, e.target.id);
-		})
-	}
-}
-
-// function appendExpandedRecipeCard(results, id) {
-// 	// console.log('expanded card results', results);
-// 	let selectedRecipe = results.filter(recipe => recipe.title.toLowerCase() === id);
-// 	console.log('selectedRecip', selectedRecipe);
-// 	let expandedRecipeCard = document.createElement("div");
-// 	expandedRecipeCard.setAttribute('class', 'card');
-// 	expandedRecipeCard.id ="selected-recipe";
-// 	expandedRecipeCard.innerHTML = `
-// 	<div class="card-body">
-// 		<img class="card-img-top"width="200" height="200" src=${selectedRecipe[0].thumbnail}>
-// 		<h1>You chose ${selectedRecipe[0].title}</h1>
-// 		<h2>${selectedRecipe[0].ingredients}</h2>
-// 		<div>
-// 			<a class="waves-effect waves-light red btn" id="create-shopping-list">Create Shopping List</a>
-// 			<a id="return-to-recipes">Return to Recipes</a>
-// 		</div>
-// 	</div>`
-// 	main.appendChild(expandedRecipeCard);
-// 	let createShoppingList = document.getElementById('create-shopping-list');
-// 	createShoppingList.addEventListener('click', e => appendShoppingList(e, selectedRecipe[0]));
-// 	let returnToRecipesButton = document.getElementById('return-to-recipes');
-// 	returnToRecipesButton.addEventListener('click', e => removeExpandedCard(e, expandedRecipeCard));
-// }
-
-function removeExpandedCard(e, expandedRecipeCard) {
-	main.removeChild(expandedRecipeCard)
-}
-
-function appendShoppingList(e, recipe) {
+function appendShoppingList(recipe) {
+	console.log('appendeddddeddddd')
 	let shoppingList = document.createElement("div");
 	shoppingList.setAttribute('class', 'card cyan darken-2');
 	shoppingList.id="shopping-list";
 	shoppingList.innerHTML = `
+		<h1>Shopping List</h1>
 		<ul id="shopping-list-ul">
 		
 		</ul>

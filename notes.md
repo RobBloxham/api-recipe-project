@@ -142,7 +142,8 @@ buttons
         
 
 // [x]add collapsible functionality to recipe cards
-// [] remove code to do with expanded card and refactor.
+// [x] add create shopping list to collapsible card.
+// [x] remove code to do with expanded card and refactor.
 // [] Dont forget to style collapsilbe list items with the same colors.
 // []Give this thing a title and add a menu bar.
 // * Chose card color
