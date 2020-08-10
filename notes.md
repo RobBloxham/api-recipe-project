@@ -132,7 +132,7 @@ Uses a container class. set to ~70% of the window width. <div class="container">
 
 
 
--- add materialize buttons
+
 -- materialize expand
 
 -- make recipe cards slightly different
@@ -152,12 +152,6 @@ buttons
 <a class="waves-effect waves-teal btn-flat">Button</a>
 ```
         
-```js
-function appendButton(foodItem, buttonContainer) {
-	let newButton = document.createElement("a");
-	newButton.id = `${foodItem}`;
-	newButton.setAttribute("class", "waves-effect waves-light red btn")
-	newButton.innerHTML = `${foodItem}`;
-	buttonContainer.appendChild(newButton);
-}
-```
+Chose card color
+chose button color
+chose text color

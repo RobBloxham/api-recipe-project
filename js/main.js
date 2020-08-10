@@ -151,12 +151,12 @@ function createRecipeCard(recipeArray, recipeContainer) {
 
 function appendRecipeCard(recipe, recipeContainer) {
 	let newRecipeCard = document.createElement("div");
-	newRecipeCard.setAttribute('class','card-body recipe-card');
+	newRecipeCard.setAttribute('class','card cyan darken-2 recipe-card');
 	newRecipeCard.id = recipe.title.toLowerCase();
 	newRecipeCard.innerHTML = `
 		<img width="50" height="50" id="${recipe.title.toLowerCase()}" src=${recipe.thumbnail}>
 		<h1>${recipe.title}</h1>
-		<div class="list-container">
+		<div class="card-content white-text list-container">
 		</div>`;
 	recipeContainer.appendChild(newRecipeCard);
 }
