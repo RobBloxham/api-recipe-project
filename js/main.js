@@ -22,6 +22,7 @@ const searchRecipesButton = document.getElementById('search-recipes');
 const recipeSection = document.getElementById('returned-recipes');
 const recipeCards = document.getElementsByClassName('recipe-card');
 const returnToRecipesButton = document.getElementById('return-to-recipes');
+const shoppingList = document.getElementById('shopping-list');
 
 
 init();
@@ -167,7 +168,7 @@ function appendRecipeCard(recipe, idx, recipeContainer) {
 		<h1>${recipe.title}</h1>
 	</div>
 	<div class="list-container collapsible-body">
-		<a class="waves-effect waves-light red btn create-shopping-list" id="${idx}">Create Shopping List</a>
+		<a href="#jump-to-shopping-list" class="waves-effect waves-light red btn create-shopping-list" id="${idx}">Create Shopping List</a>
 		<h1>Ingredients</h1>
 	</div> `;
 	recipeContainer.appendChild(newRecipeCard);
@@ -179,18 +180,12 @@ function appendRecipeCard(recipe, idx, recipeContainer) {
 
 
 function appendShoppingList(recipe) {
-	console.log('appendeddddeddddd')
-	let shoppingList = document.createElement("div");
-	shoppingList.setAttribute('class', 'card cyan darken-2');
-	shoppingList.id="shopping-list";
 	shoppingList.innerHTML = `
 		<h1>Shopping List</h1>
 		<ul id="shopping-list-ul">
 		
 		</ul>
 	`;
-	main.appendChild(shoppingList);
-
 	// add ingredients to shopping list
 	const unorderedList = document.getElementById('shopping-list-ul');
 	recipe.ingredients.forEach(ingredient => {

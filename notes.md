@@ -141,22 +141,16 @@ buttons
 ```
         
 
-// [x]add collapsible functionality to recipe cards
-// [x] add create shopping list to collapsible card.
-// [x] remove code to do with expanded card and refactor.
+
 // [] Dont forget to style collapsilbe list items with the same colors.
 // []Give this thing a title and add a menu bar.
 // * Chose card color
 // * chose button color
 // * chose text color
-//  * add confirm or return button to appended recipe.
-// 	* add a button for dont like!, remove card from list, keep browsing. 
-// 	* add a maybe button that changes the color to something.
-// * Jump to appended card
+
+// [x] Jump to shopping list.
 // * highlight the items in the returned recipe-card that already exist in your fridge ingredients array.
 // * If a request returns a recipe with no thumbnail, generate an image with the recipe.title and render that instead.
-// * make sure that it is not possible to add multiple expanded cards.
-// * add some more to shopping list template.
 // * Check the returned recipe ingredients to see what ingredients match from my fridge.
 
 // Stretch Goals
