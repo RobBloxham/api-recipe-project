@@ -34,52 +34,13 @@ body {
 }
 
 
-
-/* #main{
-	display: flex;
-	flex-direction: column;
-  justify-content: center;
-  align-items: center;
-} */
-
-/* h1 {
-	
-} */
-
-/* #select-meal {
-	background-color: red;
-	border: 5px solid white;
-	margin-bottom: 20px;
+#recipes-headline {
+	display: none;
 }
 
-#select-fridge-items {
-	background-color: red;
-	border: 5px solid white;
-	margin-bottom: 20px;
+.btn {
+	margin:5px;
 }
-
-#select-primary-protein {
-	background-color: red;
-	border: 5px solid white;
-	margin-bottom: 20px;
-}
-
-#returned-recipes{
-	background-color: red;
-	border: 5px solid white;
-	margin-bottom: 20px;
-}
-
-/* recipe container styling */
-/* .recipeCard {
-	border: 2px solid white;
-	margin: 6px;
-	padding: 5px;
-} */ 
-
-/* .clicked {
-	background-color: cornflowerblue;
-} */
 
 .exists {
 	color: red;

@@ -23,6 +23,7 @@ const recipeSection = document.getElementById('returned-recipes');
 const recipeCards = document.getElementsByClassName('recipe-card');
 const returnToRecipesButton = document.getElementById('return-to-recipes');
 const shoppingList = document.getElementById('shopping-list');
+const recipesHeadline = document.getElementById('recipes-headline');
 
 
 init();
@@ -133,6 +134,8 @@ function update() {
 }
 
 function createRecipeCard(recipeArray, recipeContainer) {
+	recipesHeadline.style.display = "block";
+
 	recipeArray.forEach((recipe, idx) => {
 		appendRecipeCard(recipe, idx, recipeContainer);
 	});

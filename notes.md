@@ -147,8 +147,8 @@ buttons
 // * Chose card color
 // * chose button color
 // * chose text color
+// []give buttons some margin to separate from each other.
 
-// [x] Jump to shopping list.
 // * highlight the items in the returned recipe-card that already exist in your fridge ingredients array.
 // * If a request returns a recipe with no thumbnail, generate an image with the recipe.title and render that instead.
 // * Check the returned recipe ingredients to see what ingredients match from my fridge.
@@ -159,4 +159,7 @@ buttons
 // CORS Anywhere NODE proxy
 
 ```js
+
+https://cors-anywhere.herokuapp.com/pipl.ir/v1/getPerson/cors-anywhere.html
+pipl.ir/v1/getPerson/cors-anywhere.html
 
