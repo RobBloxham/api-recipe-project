@@ -130,14 +130,13 @@ check if the JSon key -> value has a value at all. if its empty do something wit
 Materialize:
 Uses a container class. set to ~70% of the window width. <div class="container">
 
--- duplicate code base to experiment with materialize
--- add materialize cdn
--- remove bootstrap cdn
--- add materilize cards
+
+
 -- add materialize buttons
 -- materialize expand
 
 -- make recipe cards slightly different
+- add extra card for lists?
 
 Cards
 <div class="card blue-grey darken-1">
@@ -148,3 +147,17 @@ Cards
 
           card cyan darken-2
           card-content white-text
+
+buttons
+<a class="waves-effect waves-teal btn-flat">Button</a>
+```
+        
+```js
+function appendButton(foodItem, buttonContainer) {
+	let newButton = document.createElement("a");
+	newButton.id = `${foodItem}`;
+	newButton.setAttribute("class", "waves-effect waves-light red btn")
+	newButton.innerHTML = `${foodItem}`;
+	buttonContainer.appendChild(newButton);
+}
+```

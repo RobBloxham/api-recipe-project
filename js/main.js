@@ -36,10 +36,9 @@ function createButtons(array, buttonContainer) {
 }
 
 function appendButton(foodItem, buttonContainer) {
-	let newButton = document.createElement("button");
+	let newButton = document.createElement("a");
 	newButton.id = `${foodItem}`;
-	newButton.type = "button";
-	newButton.setAttribute("class", "btn btn-secondary")
+	newButton.setAttribute("class", "waves-effect waves-light red btn")
 	newButton.innerHTML = `${foodItem}`;
 	buttonContainer.appendChild(newButton);
 }
@@ -186,8 +185,8 @@ function appendExpandedRecipeCard(results, id) {
 		<h1>You chose ${selectedRecipe[0].title}</h1>
 		<h2>${selectedRecipe[0].ingredients}</h2>
 		<div>
-			<button id="create-shopping-list">Create Shopping List</button>
-			<button id="return-to-recipes">Return to Recipes</button>
+			<a class="waves-effect waves-light red btn" id="create-shopping-list">Create Shopping List</a>
+			<a id="return-to-recipes">Return to Recipes</a>
 		</div>
 	</div>`
 	main.appendChild(expandedRecipeCard);
