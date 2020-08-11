@@ -26,6 +26,7 @@ const shoppingList = document.getElementById('shopping-list');
 const recipesHeadline = document.getElementById('recipes-headline');
 
 
+
 init();
 // const options;
 // Event Listeners
@@ -33,8 +34,9 @@ body.addEventListener('click', e => handleChoice(e));
 searchRecipesButton.addEventListener('click', fetchData);
 // Materialzie Collapsible
 document.addEventListener('DOMContentLoaded', function() {
-    var elems = document.querySelectorAll('.collapsible');
-    var instances = M.Collapsible.init(elems);
+	const elems = document.querySelector('.collapsible');
+	console.log(elems)
+    const instances = M.Collapsible.init(elems);
   });
 
 // Create Buttons
@@ -149,8 +151,6 @@ function update() {
 function createRecipeCard(recipeArray, recipeContainer) {
 	
 	recipesHeadline.style.display = "block";
-	console.log('recipe array recieved!',recipeArray);
-
 	recipeArray.forEach((recipe, idx) => {
 		appendRecipeCard(recipe, idx, recipeContainer);
 	});
@@ -170,8 +170,6 @@ function createRecipeCard(recipeArray, recipeContainer) {
 			unorderedList[x].appendChild(li);
 		})
 	}
-
-
 }
 
 function appendRecipeCard(recipe, idx, recipeContainer) {

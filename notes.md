@@ -149,22 +149,10 @@ buttons
 [] chose text color
 [] style ingredients in collapsible
 [] style shopping list card and ingredients.
-[x] change button colors when clicked on
-  [x] !issue! Requires two clicks? Why?
-  [] !issue! give buttons more specific ids
-    depending on the array that comes through to create the button
-      append the appropriate prefix to the button
-      
-
-
-
 [] highlight the items in the returned recipe-card that already exist in your fridge ingredients array.
-
 [] If a request returns a recipe with no thumbnail, generate an image with the recipe.title and render that instead.
 [] Check the returned recipe ingredients to see what ingredients match from my fridge and protein.
-[] make sure user cannot check multiple proteins.
 [] find a way to trigger flow from one section to the next.
-
 
 Stretch Goals
 Interaction
