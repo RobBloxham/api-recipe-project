@@ -45,8 +45,7 @@ function createButtons(array, buttonContainer) {
 function appendButton(foodItem, buttonContainer) {
 	let newButton = document.createElement("a");
 	newButton.id = `${foodItem}`;
-	newButton.setAttribute("class", "btn")
-	// waves-effect waves-light
+	newButton.setAttribute("class", "btn grey lighten-2")
 	newButton.innerHTML = `${foodItem}`;
 	buttonContainer.appendChild(newButton);
 }
@@ -62,6 +61,7 @@ function handleChoice(e) {
 			mealChoice = null;
 		} else if (mealList.includes(id)) {
 			mealChoice = id ;
+			e.target.setAttribute('class', "btn red lighten-2")
 		}
 	} 
 	if (parent === 'select-fridge-items') {
