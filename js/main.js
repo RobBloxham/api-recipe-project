@@ -92,7 +92,6 @@ function handleChoice(e) {
 			proteinChoice = originalId
 		} 
 	} 
-	
 }
 
 // Data Handling //
@@ -126,6 +125,7 @@ function fetchData() {
 				}
 			})
 			.then(data => {
+				
 				let results = data.results;
 				cleanData(results);
 				returnedResults = results
@@ -142,14 +142,10 @@ function cleanData(data) {
 			recipe.ingredients[idx] = ingredient.trim();
 		})
 
-
 		if (recipe.thumbnail === "") {
 			// this is temporary, you will replace this with a generated photo eventually.
 			recipe.thumbnail = "https://picsum.photos/50";
 		}
-
-		// return recipe;
-
 	});
 	return data;
 }

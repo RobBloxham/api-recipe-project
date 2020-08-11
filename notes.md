@@ -143,7 +143,6 @@ buttons
 
 
 [] Check the returned recipe ingredients to see what ingredients match from my fridge and protein.
-[] highlight the items in the returned recipe-card that already exist in your fridge ingredients array.
 [] solve refactoring issue
 
 [] set checkbox to clicked icon when clicked on.
