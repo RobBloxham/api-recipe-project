@@ -149,7 +149,8 @@ buttons
 [] chose text color
 [] style ingredients in collapsible
 [] style shopping list card and ingredients.
-[] change button colors when clicked on
+[x] change button colors when clicked on
+  [] !issue! Requires two clicks? Why?
 
 
 

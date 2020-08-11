@@ -58,25 +58,32 @@ function handleChoice(e) {
 	// match the container to the appropriate array
 	if (parent === 'select-meal') {
 		if (mealChoice) {
+			let previous = document.getElementById(mealChoice)
+			previous.setAttribute('class', 'btn grey ligthen-2')
 			mealChoice = null;
+			e.target.setAttribute('class', 'btn green darken-1')
 		} else if (mealList.includes(id)) {
-			mealChoice = id ;
-			e.target.setAttribute('class', "btn red lighten-2")
+			mealChoice = id;
+			e.target.setAttribute('class', 'btn green darken-1');
 		}
 	} 
 	if (parent === 'select-fridge-items') {
 		if (fridgeChoice.includes(id)) {
 			fridgeChoice.splice(fridgeChoice.indexOf(id));
-		}
-		else if (fridgeList.includes(id)) {
+		} else if (fridgeList.includes(id)) {
 			fridgeChoice.push(id) ;
+			e.target.setAttribute('class', "btn green darken-1");
 		}
 	}
 	if (parent === 'select-primary-protein') {	
-		if (proteinChoice === id) {
+		if (proteinChoice) {
+			let previous = document.getElementById(proteinChoice)
+			previous.setAttribute('class', 'btn grey lighten-2')
 			proteinChoice = null;
-		} else {
+			// e.target.setAttribute('class', 'btn green darken-1')
+		} else{
 			proteinChoice = id;
+			e.target.setAttribute('class', "btn green darken-1");
 		}	
 	} 
 }
