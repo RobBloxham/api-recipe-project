@@ -38,7 +38,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const instances = M.Collapsible.init(elems);
   });
 
-
 // Create Buttons
 function createButtons(array, buttonContainer) {
 	array.forEach(foodItem => appendButton(foodItem, buttonContainer));
@@ -125,11 +124,8 @@ function fetchData() {
 				}
 			})
 			.then(data => {
-				
-				let results = data.results;
-				cleanData(results);
-				returnedResults = results
-				update();
+				returnedResults = cleanData(data.results);
+				createRecipeCard(returnedResults, recipeSection);
 			});
 	}
 }
@@ -151,7 +147,7 @@ function cleanData(data) {
 }
 
 function update() {
-	createRecipeCard(returnedResults, recipeSection);
+	
 }
 
 function createRecipeCard(recipeArray, recipeContainer) {
@@ -169,13 +165,9 @@ function createRecipeCard(recipeArray, recipeContainer) {
 	const unorderedList = document.getElementsByClassName('unordered-list');
 	for (x = 0; x < unorderedList.length; x++) {
 		recipeArray[x].ingredients.forEach(ingredient => {
-			// console.log('whats in my fridge!!',fridgeChoice);
-			// console.log('what is my ingredient?',ingredient)
 			const li = document.createElement('li');
-			// console.log(fridgeChoice.includes(ingredient))
 			li.innerHTML = ingredient;
 			fridgeChoice.includes(ingredient) ? li.setAttribute('class', 'exists') : li.setAttribute('class', 'empty');
-			// console.log(li)
 			unorderedList[x].appendChild(li);
 		})
 	}
@@ -215,6 +207,9 @@ function appendShoppingList(recipe) {
 	recipe.ingredients.forEach(ingredient => {
 		createListElements(ingredient, unorderedList)
 	});
+
+	const icons = document.querySelectorAll('.material-icons');
+	updateIcons(icons);
 }
 
 
@@ -227,17 +222,39 @@ function createListElements(ingredient, unorderedList) {
 	fridgeChoice.includes(ingredient) ? li.setAttribute('class', 'exists') : li.setAttribute('class', 'empty');
 	unorderedList.appendChild(li);
 
+	// const icons = document.querySelectorAll('.material-icons');
+	// for (let i = 0; i < icons.length; i++) {
+	// 	icons[i].addEventListener('click', e => {
+	// 		console.log('icon clicked')
+	// 		icons[i].innerText = 'check_box_outline_blank'})
+	// }
+
+	// const icons = document.querySelectorAll('.material-icons');
+	// icons.forEach(icon => icon.addEventListener('click', e => {
+	// 	icon.innerHTML = 'check_box';
+	// }))
+	// updateIcons(icons);
+	
 }
 
 // Initialization Function
 function init() {
-	renderButtons();
-}
-
-// Render Fuction
-function renderButtons() {
 	createButtons(mealList, mealSelect);
 	createButtons(fridgeList, fridgeItemsSelect);
 	createButtons(proteinList,proteinSelect);
+}
+
+function updateIcons(icons) {
+	console.log('icons',icons)
+	icons.forEach(icon => {
+		icon.addEventListener('click', e => {
+			console.log('new listener working!')
+			if (icon.innerText === 'check_box') {
+				icon.innerText = 'check_box_outline_blank'
+			} else {
+				icon.innerText = 'check_box'
+			}
+		})
+	})
 }
 
