@@ -45,7 +45,8 @@ function createButtons(array, buttonContainer) {
 function appendButton(foodItem, buttonContainer) {
 	let newButton = document.createElement("a");
 	newButton.id = `${foodItem}`;
-	newButton.setAttribute("class", "waves-effect waves-light red btn")
+	newButton.setAttribute("class", "btn")
+	// waves-effect waves-light
 	newButton.innerHTML = `${foodItem}`;
 	buttonContainer.appendChild(newButton);
 }
@@ -135,6 +136,7 @@ function update() {
 
 function createRecipeCard(recipeArray, recipeContainer) {
 	recipesHeadline.style.display = "block";
+	console.log(recipeArray);
 
 	recipeArray.forEach((recipe, idx) => {
 		appendRecipeCard(recipe, idx, recipeContainer);
@@ -155,15 +157,14 @@ function createRecipeCard(recipeArray, recipeContainer) {
 			unorderedList[x].appendChild(li);
 		})
 	}
+
+
 }
 
 function appendRecipeCard(recipe, idx, recipeContainer) {
-	
 	let id = toString(idx);
-	console.log('id', idx)
-
 	let newRecipeCard = document.createElement("li");
-	// newRecipeCard.setAttribute('class','card cyan darken-2 recipe-card');
+	newRecipeCard.setAttribute('class','card amber recipe-card');
 	newRecipeCard.id = recipe.title.toLowerCase();
 	newRecipeCard.innerHTML = `
 	<div class="collapsible-header">
@@ -171,7 +172,7 @@ function appendRecipeCard(recipe, idx, recipeContainer) {
 		<h1>${recipe.title}</h1>
 	</div>
 	<div class="list-container collapsible-body">
-		<a href="#jump-to-shopping-list" class="waves-effect waves-light red btn create-shopping-list" id="${idx}">Create Shopping List</a>
+		<a href="#jump-to-shopping-list" class="btn create-shopping-list" id="${idx}">Create Shopping List</a>
 		<h1>Ingredients</h1>
 	</div> `;
 	recipeContainer.appendChild(newRecipeCard);
@@ -184,10 +185,11 @@ function appendRecipeCard(recipe, idx, recipeContainer) {
 
 function appendShoppingList(recipe) {
 	shoppingList.innerHTML = `
+	<div class="card-content blue-grey-darken-4-text">
 		<h1>Shopping List</h1>
 		<ul id="shopping-list-ul">
-		
 		</ul>
+	</div>
 	`;
 	// add ingredients to shopping list
 	const unorderedList = document.getElementById('shopping-list-ul');
@@ -200,10 +202,13 @@ function appendShoppingList(recipe) {
 
 function createListElements(ingredient, unorderedList) {
 	const li = document.createElement('li');
-	li.innerHTML = ingredient;
+	li.innerHTML = `
+	<i class="small material-icons">check_box_outline_blank</i>
+	<h3>${ingredient}</h3>
+	`
 	fridgeChoice.includes(ingredient) ? li.setAttribute('class', 'exists') : li.setAttribute('class', 'empty');
-		unorderedList.appendChild(li);
-	return;
+	unorderedList.appendChild(li);
+	// return;
 }
 
 // Initialization Function

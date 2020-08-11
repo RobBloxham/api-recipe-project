@@ -142,24 +142,29 @@ buttons
         
 
 
-// [] Dont forget to style collapsilbe list items with the same colors.
-// []Give this thing a title and add a menu bar.
-// * Chose card color
-// * chose button color
-// * chose text color
-// []give buttons some margin to separate from each other.
 
-// * highlight the items in the returned recipe-card that already exist in your fridge ingredients array.
-// * If a request returns a recipe with no thumbnail, generate an image with the recipe.title and render that instead.
-// * Check the returned recipe ingredients to see what ingredients match from my fridge.
+[]Give this thing a title and add a menu bar.
+[] Chose card color
+[] chose button color
+[] chose text color
+[] style ingredients in collapsible
+[] style shopping list card and ingredients.
+[] change button colors when clicked on
 
-// Stretch Goals
-// Interaction
-// handle if user selects too many proteins.
-// CORS Anywhere NODE proxy
 
-```js
 
-https://cors-anywhere.herokuapp.com/pipl.ir/v1/getPerson/cors-anywhere.html
-pipl.ir/v1/getPerson/cors-anywhere.html
+[] highlight the items in the returned recipe-card that already exist in your fridge ingredients array.
+
+[] If a request returns a recipe with no thumbnail, generate an image with the recipe.title and render that instead.
+[] Check the returned recipe ingredients to see what ingredients match from my fridge and protein.
+[] make sure user cannot check multiple proteins.
+[] find a way to trigger flow from one section to the next.
+
+
+Stretch Goals
+Interaction
+[] handle if user selects too many proteins.
+[] CORS Anywhere NODE proxy
+
+
 
