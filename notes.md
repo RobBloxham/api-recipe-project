@@ -150,7 +150,11 @@ buttons
 [] style ingredients in collapsible
 [] style shopping list card and ingredients.
 [x] change button colors when clicked on
-  [] !issue! Requires two clicks? Why?
+  [x] !issue! Requires two clicks? Why?
+  [] !issue! give buttons more specific ids
+    depending on the array that comes through to create the button
+      append the appropriate prefix to the button
+      
 
 
 

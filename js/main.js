@@ -8,7 +8,7 @@ let endpoint;
 let returnedResults = null;
 
 // List of Food Items to be rendered as buttons
-const mealList = ['sandwich', 'soup', 'salad', 'baked', 'fried', 'slow cooked'];
+const mealList = ['sandwich', 'soup', 'salad', 'baked', 'fried'];
 const fridgeList = ['lettuce', 'tomato', 'pickles', 'chicken', 'mustard', 'ketchup', 'cheese', 'butter', 'cabbage'];
 const proteinList = ['chicken', 'fish', 'egg', 'tofu', 'beef'];
 
@@ -44,7 +44,7 @@ function createButtons(array, buttonContainer) {
 
 function appendButton(foodItem, buttonContainer) {
 	let newButton = document.createElement("a");
-	newButton.id = `${foodItem}`;
+	newButton.id = `${buttonContainer.id} ${foodItem}`;
 	newButton.setAttribute("class", "btn grey lighten-2")
 	newButton.innerHTML = `${foodItem}`;
 	buttonContainer.appendChild(newButton);
@@ -53,22 +53,24 @@ function appendButton(foodItem, buttonContainer) {
 // Handle button choices
 function handleChoice(e) {
 	// get the container that the id is in
-	const id = e.target.id;
+	const originalId = e.target.id;
+	const split = e.target.id.split(" ");
+	const id = split[1];
 	const parent = e.target.parentElement.id;
 	// match the container to the appropriate array
 	if (parent === 'select-meal') {
-		if (mealChoice) {
-			let previous = document.getElementById(mealChoice)
-			previous.setAttribute('class', 'btn grey ligthen-2')
-			mealChoice = null;
-			e.target.setAttribute('class', 'btn green darken-1')
+		if (!mealChoice) {
+			mealChoice = originalId;
+			e.target.setAttribute('class', "btn green darken-1")
 		} else if (mealList.includes(id)) {
-			mealChoice = id;
-			e.target.setAttribute('class', 'btn green darken-1');
+			let previous = document.getElementById(mealChoice);
+			previous.setAttribute('class', 'btn grey lighten-2');
+			mealChoice = e.target.id;
+			e.target.setAttribute('class', "btn green darken-1")
 		}
 	} 
 	if (parent === 'select-fridge-items') {
-		if (fridgeChoice.includes(id)) {
+		if (fridgeChoice.includes(id)) {			c
 			fridgeChoice.splice(fridgeChoice.indexOf(id));
 		} else if (fridgeList.includes(id)) {
 			fridgeChoice.push(id) ;
@@ -76,15 +78,15 @@ function handleChoice(e) {
 		}
 	}
 	if (parent === 'select-primary-protein') {	
-		if (proteinChoice) {
-			let previous = document.getElementById(proteinChoice)
-			previous.setAttribute('class', 'btn grey lighten-2')
-			proteinChoice = null;
-			// e.target.setAttribute('class', 'btn green darken-1')
-		} else{
-			proteinChoice = id;
+		if (!proteinChoice) {
+			proteinChoice = originalId;
 			e.target.setAttribute('class', "btn green darken-1");
-		}	
+		} else if (proteinChoice) {
+			let previous = document.getElementById(proteinChoice);
+			previous.setAttribute('class', 'btn grey lighten-2');
+			proteinChoice = e.target.id
+			e.target.setAttribute('class', "btn green darken-1")
+		} 
 	} 
 }
 
@@ -92,7 +94,10 @@ function handleChoice(e) {
 // Create request string after buttons have been selected
 function createRequestString() {
 	if (proteinChoice) {
-		endpoint = `https://recipepuppyproxy.herokuapp.com/api/?i=${proteinChoice}&q=${mealChoice}&p=3`;
+
+		const protein = proteinChoice.split(' ')[1];
+		const meal = mealChoice.split(' ')[1];
+		endpoint = `https://recipepuppyproxy.herokuapp.com/api/?i=${protein}&q=${meal}&p=3`;
 		console.log('endpoint',endpoint)
 		return endpoint;
 	}
@@ -101,9 +106,9 @@ function createRequestString() {
 // Fetch Data and update recipe cards
 function fetchData() {
 	// what do my choice arrays looks like before i fetch the data?
-	console.log('mealchoic', mealChoice);
-	console.log('proteinchoice', proteinChoice);
-	console.log('fridge items', fridgeChoice);
+	// console.log('mealchoic', mealChoice);
+	// console.log('proteinchoice', proteinChoice);
+	// console.log('fridge items', fridgeChoice);
 	if (proteinChoice) {
 		createRequestString();
 		let url = endpoint;
@@ -142,8 +147,9 @@ function update() {
 }
 
 function createRecipeCard(recipeArray, recipeContainer) {
+	
 	recipesHeadline.style.display = "block";
-	console.log(recipeArray);
+	console.log('recipe array recieved!',recipeArray);
 
 	recipeArray.forEach((recipe, idx) => {
 		appendRecipeCard(recipe, idx, recipeContainer);
@@ -186,7 +192,6 @@ function appendRecipeCard(recipe, idx, recipeContainer) {
 
 	let createShoppingList = document.getElementById(idx);
 	createShoppingList.addEventListener('click', e => appendShoppingList(recipe));
-	
 }
 
 
