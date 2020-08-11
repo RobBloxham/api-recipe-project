@@ -8,9 +8,9 @@ let endpoint;
 let returnedResults = null;
 
 // List of Food Items to be rendered as buttons
-const mealList = ['sandwich', 'soup', 'salad', 'baked', 'fried'];
-const fridgeList = ['lettuce', 'tomato', 'pickles', 'chicken', 'mustard', 'ketchup', 'cheese', 'butter', 'cabbage'];
-const proteinList = ['chicken', 'fish', 'egg', 'tofu', 'beef'];
+const mealList = ['sandwich','soup','salad','baked','fried'];
+const fridgeList = ['lettuce','tomato','pickles','chicken','mustard','ketchup','cheese','butter','cabbage'];
+const proteinList = ['chicken','fish','egg','tofu','beef'];
 
 // Cached Element References
 const body = document.body;
@@ -35,9 +35,9 @@ searchRecipesButton.addEventListener('click', fetchData);
 // Materialzie Collapsible
 document.addEventListener('DOMContentLoaded', function() {
 	const elems = document.querySelector('.collapsible');
-	console.log(elems)
     const instances = M.Collapsible.init(elems);
   });
+
 
 // Create Buttons
 function createButtons(array, buttonContainer) {
@@ -52,12 +52,18 @@ function appendButton(foodItem, buttonContainer) {
 	buttonContainer.appendChild(newButton);
 }
 
+function limitChoices(choice, e) {
+	let previous = document.getElementById(choice);
+	previous.setAttribute('class', 'btn grey lighten-2');
+	e.target.setAttribute('class', "btn green darken-1");
+}
+
 // Handle button choices
 function handleChoice(e) {
-	// get the container that the id is in
 	const originalId = e.target.id;
-	const split = e.target.id.split(" ");
-	const id = split[1];
+	const id = e.target.id.split(" ")[1];
+	
+
 	const parent = e.target.parentElement.id;
 	// match the container to the appropriate array
 	if (parent === 'select-meal') {
@@ -65,10 +71,8 @@ function handleChoice(e) {
 			mealChoice = originalId;
 			e.target.setAttribute('class', "btn green darken-1")
 		} else if (mealList.includes(id)) {
-			let previous = document.getElementById(mealChoice);
-			previous.setAttribute('class', 'btn grey lighten-2');
-			mealChoice = e.target.id;
-			e.target.setAttribute('class', "btn green darken-1")
+			limitChoices(mealChoice,e);
+			mealChoice = originalId;
 		}
 	} 
 	if (parent === 'select-fridge-items') {
@@ -84,12 +88,11 @@ function handleChoice(e) {
 			proteinChoice = originalId;
 			e.target.setAttribute('class', "btn green darken-1");
 		} else if (proteinChoice) {
-			let previous = document.getElementById(proteinChoice);
-			previous.setAttribute('class', 'btn grey lighten-2');
-			proteinChoice = e.target.id
-			e.target.setAttribute('class', "btn green darken-1")
+			limitChoices(proteinChoice, e)
+			proteinChoice = originalId
 		} 
 	} 
+	
 }
 
 // Data Handling //
@@ -100,7 +103,6 @@ function createRequestString() {
 		const protein = proteinChoice.split(' ')[1];
 		const meal = mealChoice.split(' ')[1];
 		endpoint = `https://recipepuppyproxy.herokuapp.com/api/?i=${protein}&q=${meal}&p=3`;
-		console.log('endpoint',endpoint)
 		return endpoint;
 	}
 }
@@ -126,9 +128,8 @@ function fetchData() {
 			.then(data => {
 				let results = data.results;
 				cleanData(results);
-				returnedResults = results;
+				returnedResults = results
 				update();
-				return returnedResults;
 			});
 	}
 }
@@ -136,10 +137,19 @@ function cleanData(data) {
 	data.forEach(recipe => {
 		recipe.title = recipe.title.replace(/\r\n|\n|\r|\t/gm,'');
 		recipe.ingredients = recipe.ingredients.split(',');
+		
+		recipe.ingredients.forEach((ingredient,idx) => {
+			recipe.ingredients[idx] = ingredient.trim();
+		})
+
+
 		if (recipe.thumbnail === "") {
 			// this is temporary, you will replace this with a generated photo eventually.
 			recipe.thumbnail = "https://picsum.photos/50";
 		}
+
+		// return recipe;
+
 	});
 	return data;
 }
@@ -161,12 +171,15 @@ function createRecipeCard(recipeArray, recipeContainer) {
 		listContainers[i].appendChild(ul);
 	}
 	const unorderedList = document.getElementsByClassName('unordered-list');
-
 	for (x = 0; x < unorderedList.length; x++) {
 		recipeArray[x].ingredients.forEach(ingredient => {
+			// console.log('whats in my fridge!!',fridgeChoice);
+			// console.log('what is my ingredient?',ingredient)
 			const li = document.createElement('li');
+			// console.log(fridgeChoice.includes(ingredient))
 			li.innerHTML = ingredient;
 			fridgeChoice.includes(ingredient) ? li.setAttribute('class', 'exists') : li.setAttribute('class', 'empty');
+			// console.log(li)
 			unorderedList[x].appendChild(li);
 		})
 	}
@@ -204,7 +217,6 @@ function appendShoppingList(recipe) {
 	// add ingredients to shopping list
 	const unorderedList = document.getElementById('shopping-list-ul');
 	recipe.ingredients.forEach(ingredient => {
-		// does ingredient exist in fridge?
 		createListElements(ingredient, unorderedList)
 	});
 }
@@ -218,7 +230,7 @@ function createListElements(ingredient, unorderedList) {
 	`
 	fridgeChoice.includes(ingredient) ? li.setAttribute('class', 'exists') : li.setAttribute('class', 'empty');
 	unorderedList.appendChild(li);
-	// return;
+
 }
 
 // Initialization Function

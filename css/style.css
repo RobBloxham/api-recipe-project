@@ -41,14 +41,18 @@ body {
 	/* background-color: #e0e0e0; */
 }
 
+.grey {
+	color: #263238
+}
+
 /* a {
 	background-color: #e0e0e0;
 } */
 
-/* .exists {
+.exists {
 	color: red;
 }
 
 .empty {
 	color: blue;
-} */
+}

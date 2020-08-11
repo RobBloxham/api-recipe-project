@@ -142,22 +142,31 @@ buttons
         
 
 
+[] Check the returned recipe ingredients to see what ingredients match from my fridge and protein.
+[] highlight the items in the returned recipe-card that already exist in your fridge ingredients array.
+[] solve refactoring issue
 
-[]Give this thing a title and add a menu bar.
-[] Chose card color
-[] chose button color
-[] chose text color
+[] set checkbox to clicked icon when clicked on.
+[] Give this thing a title and add a menu bar.
+[] Find font for title
 [] style ingredients in collapsible
 [] style shopping list card and ingredients.
-[] highlight the items in the returned recipe-card that already exist in your fridge ingredients array.
 [] If a request returns a recipe with no thumbnail, generate an image with the recipe.title and render that instead.
-[] Check the returned recipe ingredients to see what ingredients match from my fridge and protein.
 [] find a way to trigger flow from one section to the next.
+[] styling for desktop
+[] use CSS variables and SASS for 
 
 Stretch Goals
 Interaction
-[] handle if user selects too many proteins.
 [] CORS Anywhere NODE proxy
 
 
+
+btn grey lighten-2 #e0e0e0
+
+btn green darken-1
+
+card - amber
+
+blue-grey-darken-4-text #263238
 
