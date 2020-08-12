@@ -215,11 +215,12 @@ function appendShoppingList(recipe) {
 
 function createListElements(ingredient, unorderedList) {
 	const li = document.createElement('li');
+	li.setAttribute('class', 'shopping-list-item')
 	li.innerHTML = `
 	<i class="small material-icons">check_box_outline_blank</i>
 	<h3>${ingredient}</h3>
 	`
-	fridgeChoice.includes(ingredient) ? li.setAttribute('class', 'exists') : li.setAttribute('class', 'empty');
+	fridgeChoice.includes(ingredient) ? li.setAttribute('class', 'shopping-list-item exists') : li.setAttribute('class', 'shopping-list-item empty');
 	unorderedList.appendChild(li);
 }
 
