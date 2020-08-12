@@ -105,17 +105,12 @@ function createRequestString() {
 	}
 }
 
-// Copy to clipboard template
-// const copyToClipboard = str => {
-// 	const el = document.createElement('textarea');
-// 	el.value = str;
-// 	document.body.appendChild(el);
-// 	el.select();
+// function copyToClipBoard(link) {
+// 	link.focus();
+// 	link.select();
+// 	console.log('selected element',link.select());
 // 	document.execCommand('copy');
-// 	document.body.removeChild(el);
-//   };
-
-
+// }
 
 // function Fetch URL
 function fetchShortenedUrl() {
@@ -204,10 +199,17 @@ function createRecipeCard(recipeArray, recipeContainer) {
 		})
 	}
 
-	let copyLinks = document.querySelectorAll('.copy-link');
-	copyLinks.forEach(copyLink => {
-		copyLink.addEventListener('click',e => console.log(e) )
-	})
+	// let copyLinks = document.querySelectorAll('.copy-link');
+	// let textArea = document.querySelectorAll('textarea');
+	// copyLinks.forEach((copyLink, idx) => {
+	// 	copyLink.addEventListener('click',e => {
+	// 		let linkEl = textArea[idx];
+	// 		console.dir(linkEl)
+	// 		// call function and pass sibling
+	// 		copyToClipBoard(linkEl);
+
+	// 	} )
+	// })
 }
 
 function appendRecipeCard(recipe, idx, recipeContainer) {
@@ -223,6 +225,7 @@ function appendRecipeCard(recipe, idx, recipeContainer) {
 	<div class="list-container collapsible-body">
 		<a href="#jump-to-shopping-list" class="btn create-shopping-list" id="${idx}">Create Shopping List</a>
 		<a href=${recipe.href} class="btn" target="_blank">Visit Recipe Website</a>
+		<textarea class="hidden" id="${idx}">${recipe.href}</textarea>
 		<button class="btn copy-link">Copy Link</button>
 		<h1>Ingredients</h1>
 	</div> `;
@@ -230,8 +233,6 @@ function appendRecipeCard(recipe, idx, recipeContainer) {
 
 	let createShoppingList = document.getElementById(idx);
 	createShoppingList.addEventListener('click', e => appendShoppingList(recipe));
-
-	
 }
 
 

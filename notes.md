@@ -5,10 +5,11 @@
 
 [] If a request returns a recipe with no thumbnail, generate an image with the recipe.title and render that instead.
 [] find a way to trigger flow from one section to the next.
+
 [] styling for desktop
 [] update css variables
 
-[x] Show link to website, open website in new tab.
+
 
 
 
@@ -19,12 +20,14 @@
 
 [] add second api to shorten link.
 [] When do i fire post request?
-[x] Add link button
-[x] add event listener for copy link
+
 [x] create fetch request to (template created)
   [] issue!! fetch request not working.
 
-[] add copy to clipboard button
+[x] add copy to clipboard button
+[x] add event listener to copy button
+[] call copy to clipboard function and pass recipe
+  [x] how to pass recipe into this function? access by previousElementSibling
 
 POST https://rel.ink/api/links/
 

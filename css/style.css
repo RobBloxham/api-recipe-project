@@ -32,7 +32,7 @@ body {
 			Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 	margin: 0;
 
-	/* display: grid; */
+	display: grid;
 	font-size: 2.4rem;
 	font-weight: bold;
 	height: 100vh;
@@ -40,6 +40,18 @@ body {
 .container {
 	display: flex;
 	flex-direction: column;
+	/* display: grid; */
+}
+
+header {
+	grid-area: header;
+}
+#preferences {
+	grid-area: preferences;
+}
+
+#render-recipes {
+	grid-area: recipes;
 }
 
 .card {
@@ -92,10 +104,6 @@ body {
 	color: #263238
 }
 
-/* a {
-	background-color: #e0e0e0;
-} */
-
 .exists {
 	color: red;
 }
@@ -104,8 +112,27 @@ body {
 	color: blue;
 }
 
-
-
 .create-shopping-list {
 	background-color: var(--green);
 }
+
+
+
+/* .hidden {
+	display: none;
+} */
+
+/* 768px is a common "breakpoint" width for tablets */
+@media only screen and (min-width:768px) {
+	.container {
+		display: grid;
+		
+		/* tablet - two column display */
+		grid-template-columns: 1fr 4fr;
+		grid-template-rows: 400px auto;
+		grid-template-areas:
+			"header header"
+			"preferences recipes"
+	}
+}
+
