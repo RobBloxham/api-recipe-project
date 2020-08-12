@@ -28,7 +28,7 @@ const recipesHeadline = document.getElementById('recipes-headline');
 
 
 init();
-// const options;
+
 // Event Listeners
 body.addEventListener('click', e => handleChoice(e));
 searchRecipesButton.addEventListener('click', fetchData);
@@ -46,7 +46,7 @@ function createButtons(array, buttonContainer) {
 function appendButton(foodItem, buttonContainer) {
 	let newButton = document.createElement("a");
 	newButton.id = `${buttonContainer.id} ${foodItem}`;
-	newButton.setAttribute("class", "btn grey lighten-2")
+	newButton.setAttribute("class", "btn")
 	newButton.innerHTML = `${foodItem}`;
 	buttonContainer.appendChild(newButton);
 }
@@ -176,7 +176,7 @@ function createRecipeCard(recipeArray, recipeContainer) {
 function appendRecipeCard(recipe, idx, recipeContainer) {
 	let id = toString(idx);
 	let newRecipeCard = document.createElement("li");
-	newRecipeCard.setAttribute('class','card amber recipe-card');
+	newRecipeCard.setAttribute('class','card recipe-card');
 	newRecipeCard.id = recipe.title.toLowerCase();
 	newRecipeCard.innerHTML = `
 	<div class="collapsible-header">
@@ -196,7 +196,7 @@ function appendRecipeCard(recipe, idx, recipeContainer) {
 
 function appendShoppingList(recipe) {
 	shoppingList.innerHTML = `
-	<div class="card-content blue-grey-darken-4-text">
+	<div class="card-content">
 		<h1>Shopping List</h1>
 		<ul id="shopping-list-ul">
 		</ul>
@@ -221,20 +221,6 @@ function createListElements(ingredient, unorderedList) {
 	`
 	fridgeChoice.includes(ingredient) ? li.setAttribute('class', 'exists') : li.setAttribute('class', 'empty');
 	unorderedList.appendChild(li);
-
-	// const icons = document.querySelectorAll('.material-icons');
-	// for (let i = 0; i < icons.length; i++) {
-	// 	icons[i].addEventListener('click', e => {
-	// 		console.log('icon clicked')
-	// 		icons[i].innerText = 'check_box_outline_blank'})
-	// }
-
-	// const icons = document.querySelectorAll('.material-icons');
-	// icons.forEach(icon => icon.addEventListener('click', e => {
-	// 	icon.innerHTML = 'check_box';
-	// }))
-	// updateIcons(icons);
-	
 }
 
 // Initialization Function
