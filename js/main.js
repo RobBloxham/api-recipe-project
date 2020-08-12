@@ -208,7 +208,6 @@ function createRecipeCard(recipeArray, recipeContainer) {
 	copyLinks.forEach(copyLink => {
 		copyLink.addEventListener('click',e => console.log(e) )
 	})
-	// console.log(copyLink);
 }
 
 function appendRecipeCard(recipe, idx, recipeContainer) {
@@ -224,7 +223,7 @@ function appendRecipeCard(recipe, idx, recipeContainer) {
 	<div class="list-container collapsible-body">
 		<a href="#jump-to-shopping-list" class="btn create-shopping-list" id="${idx}">Create Shopping List</a>
 		<a href=${recipe.href} class="btn" target="_blank">Visit Recipe Website</a>
-		<button class="btn copy-link">Copy Link</a>
+		<button class="btn copy-link">Copy Link</button>
 		<h1>Ingredients</h1>
 	</div> `;
 	recipeContainer.appendChild(newRecipeCard);

@@ -66,11 +66,15 @@ body {
 
 .recipe-card {
 	margin: 5px 10px;
-	background-color: var(--light-peach)
+	background-color: var(--light-peach);
 }
 
 .collapsible-header {
-	background-color: var(--light-peach)
+	background-color: var(--light-peach);
+}
+
+.collapsible-body {
+	text-align: center;
 }
 
 .shopping-list-item {
