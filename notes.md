@@ -7,6 +7,9 @@
 [] find a way to trigger flow from one section to the next.
 
 [] styling for desktop
+  [] create sidebar
+  [] add padding to cards
+  [] 
 [] update css variables
 
 

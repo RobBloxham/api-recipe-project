@@ -40,11 +40,17 @@ body {
 .container {
 	display: flex;
 	flex-direction: column;
-	/* display: grid; */
+	background-color: grey;
 }
 
 header {
 	grid-area: header;
+	text-align: center;
+	background-color: lightblue
+}
+
+h1 {
+	font-size: 2rem;
 }
 #preferences {
 	grid-area: preferences;
@@ -128,8 +134,8 @@ header {
 		display: grid;
 		
 		/* tablet - two column display */
-		grid-template-columns: 1fr 4fr;
-		grid-template-rows: 400px auto;
+		grid-template-columns: 2fr 3fr;
+		grid-template-rows: auto auto;
 		grid-template-areas:
 			"header header"
 			"preferences recipes"
