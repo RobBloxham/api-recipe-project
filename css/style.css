@@ -41,12 +41,36 @@ body {
 	display: flex;
 	flex-direction: column;
 }
+
+.card {
+	background-color: var(--amber)
+}
+
+.card-content {
+	color: var(--blue-grey);
+}
+
+/* recipe container */
+#returned-recipes {
+	background-color: var(--amber);
+}
+
 #recipes-headline {
 	display: none;
+	text-align: center;
+}
+
+#recipe-title {
+	text-align: center;
 }
 
 .recipe-card {
 	margin: 5px 10px;
+	background-color: var(--light-peach)
+}
+
+.collapsible-header {
+	background-color: var(--light-peach)
 }
 
 .shopping-list-item {
@@ -76,13 +100,7 @@ body {
 	color: blue;
 }
 
-.card {
-	background-color: var(--amber)
-}
 
-.card-content {
-	color: var(--blue-grey);
-}
 
 .create-shopping-list {
 	background-color: var(--green);

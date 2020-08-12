@@ -105,12 +105,31 @@ function createRequestString() {
 	}
 }
 
+// function Fetch URL
+function fetchShortenedUrl() {
+	requestData = { 
+		"url": "https://www.w3schools.com/tags/ref_urlencode.ASP"
+	}
+	endpoint = 'https://rel.ink/api/links/'
+	
+
+	fetch(endpoint, {
+		method: 'post',
+		mode: 'cors',
+		body: JSON.stringify(requestData)
+	}) // make sure post request
+		.then((response) => {
+			console.log(response)
+			response.json()
+		})
+		.then(data => {
+			console.log(data);
+		})
+}
+
 // Fetch Data and update recipe cards
 function fetchData() {
-	// what do my choice arrays looks like before i fetch the data?
-	// console.log('mealchoic', mealChoice);
-	// console.log('proteinchoice', proteinChoice);
-	// console.log('fridge items', fridgeChoice);
+	console.log('Fetching Data')
 	if (proteinChoice) {
 		createRequestString();
 		let url = endpoint;
@@ -124,6 +143,7 @@ function fetchData() {
 				}
 			})
 			.then(data => {
+				console.log('Data returned successfully')
 				returnedResults = cleanData(data.results);
 				createRecipeCard(returnedResults, recipeSection);
 			});
@@ -167,7 +187,7 @@ function createRecipeCard(recipeArray, recipeContainer) {
 		recipeArray[x].ingredients.forEach(ingredient => {
 			const li = document.createElement('li');
 			li.innerHTML = ingredient;
-			fridgeChoice.includes(ingredient) ? li.setAttribute('class', 'exists') : li.setAttribute('class', 'empty');
+			checkFridgeIncludes(ingredient,'', li)
 			unorderedList[x].appendChild(li);
 		})
 	}
@@ -181,10 +201,11 @@ function appendRecipeCard(recipe, idx, recipeContainer) {
 	newRecipeCard.innerHTML = `
 	<div class="collapsible-header">
 		<img width="50" height="50" id="${recipe.title.toLowerCase()}" src=${recipe.thumbnail}>
-		<h1>${recipe.title}</h1>
+		<h1 class="recipe-title">${recipe.title}</h1>
 	</div>
 	<div class="list-container collapsible-body">
 		<a href="#jump-to-shopping-list" class="btn create-shopping-list" id="${idx}">Create Shopping List</a>
+		<a href=${recipe.href} target="_blank">Visit Recipe Website</a>
 		<h1>Ingredients</h1>
 	</div> `;
 	recipeContainer.appendChild(newRecipeCard);
@@ -220,8 +241,12 @@ function createListElements(ingredient, unorderedList) {
 	<i class="small material-icons">check_box_outline_blank</i>
 	<h3>${ingredient}</h3>
 	`
-	fridgeChoice.includes(ingredient) ? li.setAttribute('class', 'shopping-list-item exists') : li.setAttribute('class', 'shopping-list-item empty');
+	checkFridgeIncludes(ingredient, 'shopping-list-item', li);
 	unorderedList.appendChild(li);
+}
+
+function checkFridgeIncludes(ingredient, className, li) {
+	fridgeChoice.includes(ingredient) ? li.setAttribute('class', `${className} exists`) : li.setAttribute('class', `${className} empty`);
 }
 
 // Initialization Function
