@@ -19,7 +19,10 @@
 
 [] When do i fire post request?
 [x] Add link button
+[] add event listener for copy link
 [] create fetch request to 
+
+[] add copy to clipboard button
 
 POST https://rel.ink/api/links/
 

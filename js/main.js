@@ -105,6 +105,18 @@ function createRequestString() {
 	}
 }
 
+// Copy to clipboard template
+// const copyToClipboard = str => {
+// 	const el = document.createElement('textarea');
+// 	el.value = str;
+// 	document.body.appendChild(el);
+// 	el.select();
+// 	document.execCommand('copy');
+// 	document.body.removeChild(el);
+//   };
+
+
+
 // function Fetch URL
 function fetchShortenedUrl() {
 	requestData = { 
@@ -191,6 +203,12 @@ function createRecipeCard(recipeArray, recipeContainer) {
 			unorderedList[x].appendChild(li);
 		})
 	}
+
+	let copyLinks = document.querySelectorAll('.copy-link');
+	copyLinks.forEach(copyLink => {
+		copyLink.addEventListener('click',e => console.log(e) )
+	})
+	// console.log(copyLink);
 }
 
 function appendRecipeCard(recipe, idx, recipeContainer) {
@@ -205,13 +223,16 @@ function appendRecipeCard(recipe, idx, recipeContainer) {
 	</div>
 	<div class="list-container collapsible-body">
 		<a href="#jump-to-shopping-list" class="btn create-shopping-list" id="${idx}">Create Shopping List</a>
-		<a href=${recipe.href} target="_blank">Visit Recipe Website</a>
+		<a href=${recipe.href} class="btn" target="_blank">Visit Recipe Website</a>
+		<button class="btn copy-link">Copy Link</a>
 		<h1>Ingredients</h1>
 	</div> `;
 	recipeContainer.appendChild(newRecipeCard);
 
 	let createShoppingList = document.getElementById(idx);
 	createShoppingList.addEventListener('click', e => appendShoppingList(recipe));
+
+	
 }
 
 
