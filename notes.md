@@ -5,9 +5,6 @@
 [] Check the returned recipe ingredients to see what ingredients match from my fridge and protein.
 
 
-[] shopping list equals flex, icons flex direction row.
-
-
 [] Give this thing a title and add a menu bar.
 [] Find font for title
 [] style ingredients in collapsible
@@ -15,7 +12,7 @@
 [] If a request returns a recipe with no thumbnail, generate an image with the recipe.title and render that instead.
 [] find a way to trigger flow from one section to the next.
 [] styling for desktop
-[] use CSS variables and SASS for 
+[] update css variables
 
 Stretch Goals
 Interaction

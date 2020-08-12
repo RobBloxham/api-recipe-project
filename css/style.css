@@ -18,9 +18,13 @@ in most browser configurations this will be 10px */
 :root {
 	font-size: 62.5%;
 	--light-grey: #e0e0e0;
-	--green: #43a047;
+	--green: #009E33;
 	--amber: #ffc107;
+	--dark-green: #008B4E;
 	--blue-grey: #263238;
+	--light-peach: #FFEDE6;
+	--light-blue: #C3FCF2;
+	--reddish: #C1564C;
 } */
 
 body {
