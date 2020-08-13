@@ -35,6 +35,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const instances = M.Collapsible.init(elems);
   });
 
+init();
 
 // Create Buttons
 function createButtons(array, buttonContainer) {
@@ -108,14 +109,15 @@ function copyToClipBoard(link) {
 }
 
 
-function fetchShortenedUrl(url) {
+async function fetchShortenedUrl(url) {
 	requestData = { 
 		"url": url
 	}
 	endpoint = 'https://rel.ink/api/links/'
+	let addTo = 'https://rel.ink/'
 	
 	
-	return fetch(endpoint, {
+	return await fetch(endpoint, {
 		method: 'post',
 		// mode: 'cors',
 		body: JSON.stringify(requestData),
@@ -129,13 +131,11 @@ function fetchShortenedUrl(url) {
 		.then(data => {
 			// return data.hashid
 			// console.log(data.hashid)
-			const shortened = endpoint+data.hashid
-			console.log(shortened);
+			const shortened = addTo+data.hashid
 			return shortened;
 		})
+		
 }
-
-
 
 // Fetch Data and update recipe cards
 function fetchData() {
@@ -144,7 +144,7 @@ function fetchData() {
 		createRequestString();
 		let url = endpoint;
 	
-		fetch(url)
+		return fetch(url)
 			.then((response) => {
 				if (response.status == 200) {
 					return response.json();
@@ -176,44 +176,33 @@ function cleanData(data) {
 
 
 function createRecipeCard(recipes, recipeContainer) {
-
 	recipesHeadline.style.display = "block";
+
 	recipes.forEach((recipe, idx) => {
-		appendRecipeCard(recipe, idx, recipeContainer);
+		fetchShortenedUrl(recipe.href)
+		.then(result => {
+			appendRecipeCard(recipe, idx, recipeContainer,result);
+		})
+		;
 	});
 
-	const listContainers = document.querySelectorAll('.list-container');
-	listContainers.forEach(listContainer => {
-		const ul = document.createElement('ul')
-		ul.setAttribute('class','unordered-list');
-		listContainer.appendChild(ul);
-	})
 
-	const unorderedLists = document.querySelectorAll('.unordered-list');
-	unorderedLists.forEach((unorderedList,idx) => {
-		recipes[idx].ingredients.forEach(ingredient => {
-			const li = document.createElement('li');
-			li.innerHTML = ingredient;
-			checkFridgeIncludes(ingredient,'', li)
-			unorderedList.appendChild(li);
-		})
-	})
-
-	
 	let links = document.querySelectorAll('textarea');
-	let copyButton = document.querySelectorAll('.copy-link')
+	let copyButton = document.querySelectorAll('.copy-link');
 	links.forEach((link, idx)=> { 
-		copyButton[idx].addEventListener('click', e => copyToClipBoard(link))})
+		console.log(link)
+		copyButton[idx].addEventListener('click', e => {
+			copyToClipBoard(link)
+		})})
 	
 }
 
-	
 
-async function appendRecipeCard(recipe, idx, recipeContainer) {
+
+function appendRecipeCard(recipe, idx, recipeContainer,result) {
 	let overlapping = fridgeChoice.filter(fridgeItem => recipe.ingredients.includes(fridgeItem));
 	
-	let shortURL= await fetchShortenedUrl(recipe.href);
-
+	
 	let newRecipeCard = document.createElement("li");
 	newRecipeCard.setAttribute('class','card recipe-card');
 	newRecipeCard.id = recipe.title.toLowerCase();
@@ -225,10 +214,10 @@ async function appendRecipeCard(recipe, idx, recipeContainer) {
 			<h2 class="recipe-overlap">You have ${overlapping.length} out of ${recipe.ingredients.length} ingredients for this recipe.</h2>
 		</div>
 	</div>
-	<div class="list-container collapsible-body">
+	<div class="list-container collapsible-body" id=${idx}>
 		<a href="#jump-to-shopping-list" class="btn create-shopping-list" id="${idx}">Create Shopping List</a>
 		<a href=${recipe.href} class="btn" target="_blank">Visit Recipe Website</a>
-		<textarea class="hidden" id="${idx}">${shortURL}</textarea>
+		<textarea class="hidden">${result}</textarea>
 		<button class="btn copy-link">Copy Link</button>
 		<h1>Ingredients</h1>
 	</div> `;
@@ -238,7 +227,31 @@ async function appendRecipeCard(recipe, idx, recipeContainer) {
 	let createShoppingList = document.getElementById(idx);
 	createShoppingList.addEventListener('click', e => appendToShoppingList(recipe));
 
+	appendUl(idx);
+	appendLiToUl(idx, recipe)
+	
 }
+
+function appendUl(id) {
+	const listContainer = document.getElementById(id)
+	const ul = document.createElement('ul');
+	ul.id = `ul${id}`
+	ul.setAttribute('class','unordered-list');
+	listContainer.appendChild(ul)
+}
+
+function appendLiToUl(id, recipe) {
+	const unorderedList = document.getElementById(`ul${id}`)
+	recipe.ingredients.forEach(ingredient => {
+		const li = document.createElement('li');
+			li.innerHTML = ingredient;
+			checkFridgeIncludes(ingredient,'', li)
+			unorderedList.appendChild(li);
+	})
+}
+
+
+
 
 
 function appendToShoppingList(recipe) {
@@ -294,4 +307,3 @@ function updateIcons(icons) {
 	})
 }
 
-init();
