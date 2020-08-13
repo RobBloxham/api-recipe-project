@@ -2,17 +2,17 @@
         
 
 
-[] If a request returns a recipe with no thumbnail, generate an image with the recipe.title and render that instead.
 [] find a way to trigger flow from one section to the next.
 
 -- [] Styling
+[] change font for ingredient list items in recipe card.
+[] select better way of visualizing .empty or .exists
 [] styling for desktop
 [] Strikethrough on existing ingredients in shopping list and grey out text, make checkbox inactive.
 [] can i add icons to this?
 
-[] Check to see that all code is readable
 
-[x] How many ingredients overlap in your fridge and recipe?
+
 
 
 
@@ -28,6 +28,8 @@
 
 Stretch Goals
 Interaction
+[] If a request returns a recipe with no thumbnail, generate an image with the recipe.title and render that instead.
+[] Check to see that all code is readable
 [] CORS Anywhere NODE proxy
 [] Scrape website link for first image?
 [] Make fridge bar?

@@ -20,10 +20,10 @@ const fridgeItemsSelect = document.getElementById('select-fridge-items');
 const proteinSelect = document.getElementById('select-primary-protein');
 const searchRecipesButton = document.getElementById('search-recipes');
 const recipeSection = document.getElementById('returned-recipes');
-const recipeCards = document.getElementsByClassName('recipe-card');
 const returnToRecipesButton = document.getElementById('return-to-recipes');
 const shoppingList = document.getElementById('shopping-list');
 const recipesHeadline = document.getElementById('recipes-headline');
+const recipeCards = document.getElementsByClassName('recipe-card');
 
 
 
@@ -176,29 +176,29 @@ function update() {
 	
 }
 
-function createRecipeCard(recipeArray, recipeContainer) {
-	
-	
+function createRecipeCard(recipes, recipeContainer) {
 
 	recipesHeadline.style.display = "block";
-	recipeArray.forEach((recipe, idx) => {
+	recipes.forEach((recipe, idx) => {
 		appendRecipeCard(recipe, idx, recipeContainer);
 	});
-	const listContainers = document.getElementsByClassName('list-container');
-	for (let i = 0; i < listContainers.length; i++) {
+
+	const listContainers = document.querySelectorAll('.list-container');
+	listContainers.forEach(listContainer => {
 		const ul = document.createElement('ul')
 		ul.setAttribute('class','unordered-list');
-		listContainers[i].appendChild(ul);
-	}
-	const unorderedList = document.getElementsByClassName('unordered-list');
-	for (x = 0; x < unorderedList.length; x++) {
-		recipeArray[x].ingredients.forEach(ingredient => {
+		listContainer.appendChild(ul);
+	})
+
+	const unorderedLists = document.querySelectorAll('.unordered-list');
+	unorderedLists.forEach((unorderedList,idx) => {
+		recipes[idx].ingredients.forEach(ingredient => {
 			const li = document.createElement('li');
 			li.innerHTML = ingredient;
 			checkFridgeIncludes(ingredient,'', li)
-			unorderedList[x].appendChild(li);
+			unorderedList.appendChild(li);
 		})
-	}
+	})
 
 	// let copyLinks = document.querySelectorAll('.copy-link');
 	// let textArea = document.querySelectorAll('textarea');
