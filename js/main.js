@@ -134,7 +134,6 @@ async function fetchShortenedUrl(url) {
 			const shortened = addTo+data.hashid
 			return shortened;
 		})
-		
 }
 
 // Fetch Data and update recipe cards
@@ -154,10 +153,26 @@ function fetchData() {
 			})
 			.then(data => {
 				returnedResults = cleanData(data.results);
-				createRecipeCard(returnedResults, recipeSection);
+				return returnedResults
+				// createRecipeCard(returnedResults, recipeSection);
+			})
+			.then(results => {
+				results.forEach((recipe,idx) => {
+					fetchShortenedUrl(recipe.href).then(shortened => {
+						returnedResults[idx].href = shortened;
+					});
+				})
+				return returnedResults
+			})
+			.then(results => {
+				createRecipeCard(results, recipeSection)
 			});
 	}
 }
+
+
+
+
 function cleanData(data) {
 	data.forEach(recipe => {
 		recipe.title = recipe.title.replace(/\r\n|\n|\r|\t/gm,'');
@@ -178,13 +193,17 @@ function cleanData(data) {
 function createRecipeCard(recipes, recipeContainer) {
 	recipesHeadline.style.display = "block";
 
-	recipes.forEach((recipe, idx) => {
-		fetchShortenedUrl(recipe.href)
-		.then(result => {
-			appendRecipeCard(recipe, idx, recipeContainer,result);
-		})
-		;
-	});
+	// recipes.forEach((recipe, idx) => {
+	// 	fetchShortenedUrl(recipe.href)
+	// 	.then(result => {
+	// 		appendRecipeCard(recipe, idx, recipeContainer);
+	// 	})
+	// 	;
+	// });
+
+	recipes.forEach((recipe,idx) => {
+		appendRecipeCard(recipe, idx, recipeContainer)
+	})
 
 
 	let links = document.querySelectorAll('textarea');
@@ -199,7 +218,7 @@ function createRecipeCard(recipes, recipeContainer) {
 
 
 
-function appendRecipeCard(recipe, idx, recipeContainer,result) {
+function appendRecipeCard(recipe, idx, recipeContainer) {
 	let overlapping = fridgeChoice.filter(fridgeItem => recipe.ingredients.includes(fridgeItem));
 	
 	
@@ -217,7 +236,7 @@ function appendRecipeCard(recipe, idx, recipeContainer,result) {
 	<div class="list-container collapsible-body" id=${idx}>
 		<a href="#jump-to-shopping-list" class="btn create-shopping-list" id="${idx}">Create Shopping List</a>
 		<a href=${recipe.href} class="btn" target="_blank">Visit Recipe Website</a>
-		<textarea class="hidden">${result}</textarea>
+		<textarea class="hidden">${recipe.href}</textarea>
 		<button class="btn copy-link">Copy Link</button>
 		<h1>Ingredients</h1>
 	</div> `;
@@ -249,10 +268,6 @@ function appendLiToUl(id, recipe) {
 			unorderedList.appendChild(li);
 	})
 }
-
-
-
-
 
 function appendToShoppingList(recipe) {
 	shoppingList.innerHTML = `
