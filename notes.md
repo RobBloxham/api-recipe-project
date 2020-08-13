@@ -7,9 +7,9 @@
 [] find a way to trigger flow from one section to the next.
 
 [] styling for desktop
-  [] create sidebar
-  [] add padding to cards
-  [] 
+  [x] create sidebar
+  [x] add margin to cards
+  [] fix button issue
 [] update css variables
 
 
@@ -19,11 +19,11 @@
 [] Check to see that all code is readable
 [] How many ingredients overlap in your fridge and recipe?
 [] Strikethrough on existing ingredients in shopping list and grey out text, make checkbox inactive.
+[] can i add icons to this?
 
 
 [] add second api to shorten link.
 [] When do i fire post request?
-
 [x] create fetch request to (template created)
   [] issue!! fetch request not working.
 
@@ -72,3 +72,5 @@ blue-grey-darken-4-text #263238
 
 ```
 
+font-family: 'Fjalla One', sans-serif;
+font-family: 'Lobster', cursive;

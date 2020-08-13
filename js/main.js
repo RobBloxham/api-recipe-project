@@ -53,8 +53,8 @@ function appendButton(foodItem, buttonContainer) {
 
 function limitChoices(choice, e) {
 	let previous = document.getElementById(choice);
-	previous.setAttribute('class', 'btn grey lighten-2');
-	e.target.setAttribute('class', "btn green darken-1");
+	previous.setAttribute('class', 'btn cleared');
+	e.target.setAttribute('class', "btn selected");
 }
 
 // Handle button choices
@@ -68,7 +68,7 @@ function handleChoice(e) {
 	if (parent === 'select-meal') {
 		if (!mealChoice) {
 			mealChoice = originalId;
-			e.target.setAttribute('class', "btn green darken-1")
+			e.target.setAttribute('class', "btn selected")
 		} else if (mealList.includes(id)) {
 			limitChoices(mealChoice,e);
 			mealChoice = originalId;
@@ -79,13 +79,13 @@ function handleChoice(e) {
 			fridgeChoice.splice(fridgeChoice.indexOf(id));
 		} else if (fridgeList.includes(id)) {
 			fridgeChoice.push(id) ;
-			e.target.setAttribute('class', "btn green darken-1");
+			e.target.setAttribute('class', "btn selected");
 		}
 	}
 	if (parent === 'select-primary-protein') {	
 		if (!proteinChoice) {
 			proteinChoice = originalId;
-			e.target.setAttribute('class', "btn green darken-1");
+			e.target.setAttribute('class', "btn selected");
 		} else if (proteinChoice) {
 			limitChoices(proteinChoice, e)
 			proteinChoice = originalId

@@ -37,10 +37,12 @@ body {
 	font-weight: bold;
 	height: 100vh;
 }
+
 .container {
 	display: flex;
 	flex-direction: column;
-	background-color: grey;
+	background-color: white;
+	width: 100%;
 }
 
 header {
@@ -49,9 +51,22 @@ header {
 	background-color: lightblue
 }
 
-h1 {
-	font-size: 2rem;
+#title { 
+	font-family: 'Lobster', cursive;
 }
+
+.question {
+	font-size: 2rem;
+	font-family: 'Fjalla One', sans-serif;
+}
+
+a {
+	font-family: 'Fjalla One', sans-serif;
+}
+
+/* h1 {
+	font-size: 2rem;
+} */
 #preferences {
 	grid-area: preferences;
 }
@@ -61,7 +76,8 @@ h1 {
 }
 
 .card {
-	background-color: var(--amber)
+	background-color: var(--amber);
+	margin: 5px;
 }
 
 .card-content {
@@ -91,8 +107,18 @@ h1 {
 	background-color: var(--light-peach);
 }
 
+img {
+	margin: 5px;
+	/* align-items: center; */
+	text-align: center;
+}
+
 .collapsible-body {
 	text-align: center;
+}
+
+#recipe-title {
+	text-align:center;
 }
 
 .shopping-list-item {
@@ -104,10 +130,17 @@ h1 {
 .btn {
 	margin:5px;
 	background-color: var(--light-grey);
+	color: var(--blue-grey)
 }
 
-.grey {
-	color: #263238
+.selected {
+	background-color: var(--dark-green);
+	color: white;
+}
+
+.cleared {
+	background-color: var(--light-grey);
+	color: var(--blue-grey);
 }
 
 .exists {
