@@ -43,7 +43,12 @@ body {
 	flex-direction: column;
 	background-color: white;
 	width: 100%;
+	/* scroll-snap-type: y mandatory; */
 }
+
+/* .child {
+	scroll-snap-align: start;
+  } */
 
 header {
 	grid-area: header;
@@ -149,15 +154,22 @@ img {
 	color: red;
 }
 
-.empty {
+/* .empty {
 	color: blue;
-}
+} */
 
 .create-shopping-list {
 	background-color: var(--green);
 }
 
-.recip
+.unordered-list > li {
+	font-family: 'Fjalla One', sans-serif;
+	font-size: 2rem;
+}
+
+.list-container > h1 {
+	text-decoration: underline;
+}
 
 
 

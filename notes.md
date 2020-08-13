@@ -2,19 +2,11 @@
         
 
 
-[] find a way to trigger flow from one section to the next.
 
 -- [] Styling
-[] change font for ingredient list items in recipe card.
 [] select better way of visualizing .empty or .exists
 [] styling for desktop
-[] Strikethrough on existing ingredients in shopping list and grey out text, make checkbox inactive.
 [] can i add icons to this?
-
-
-
-
-
 
 -- implement second api
 [] add second api to shorten link.
@@ -22,12 +14,9 @@
 [x] create fetch request to (template created)
   [] issue!! fetch request not working.
 
-
-
-
-
 Stretch Goals
 Interaction
+[] find a way to trigger flow from one section to the next.
 [] If a request returns a recipe with no thumbnail, generate an image with the recipe.title and render that instead.
 [] Check to see that all code is readable
 [] CORS Anywhere NODE proxy

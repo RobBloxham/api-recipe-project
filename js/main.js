@@ -23,11 +23,8 @@ const recipeSection = document.getElementById('returned-recipes');
 const returnToRecipesButton = document.getElementById('return-to-recipes');
 const shoppingList = document.getElementById('shopping-list');
 const recipesHeadline = document.getElementById('recipes-headline');
-const recipeCards = document.getElementsByClassName('recipe-card');
 
 
-
-init();
 
 // Event Listeners
 body.addEventListener('click', e => handleChoice(e));
@@ -104,12 +101,12 @@ function createRequestString() {
 	}
 }
 
-// function copyToClipBoard(link) {
-// 	link.focus();
-// 	link.select();
-// 	console.log('selected element',link.select());
-// 	document.execCommand('copy');
-// }
+function copyToClipBoard(link) {
+	console.dir(link)
+	console.log('focus',link.focus());
+	console.log('select',link.select());
+	document.execCommand('copy');
+}
 
 // // function Fetch URL
 // function fetchShortenedUrl() {
@@ -164,17 +161,13 @@ function cleanData(data) {
 			recipe.ingredients[idx] = ingredient.trim();
 		})
 
-		if (recipe.thumbnail === "") {
-			// this is temporary, you will replace this with a generated photo eventually.
+		if (recipe.thumbnail === '') {
 			recipe.thumbnail = "https://picsum.photos/50";
 		}
 	});
 	return data;
 }
 
-function update() {
-	
-}
 
 function createRecipeCard(recipes, recipeContainer) {
 
@@ -200,23 +193,21 @@ function createRecipeCard(recipes, recipeContainer) {
 		})
 	})
 
-	// let copyLinks = document.querySelectorAll('.copy-link');
-	// let textArea = document.querySelectorAll('textarea');
-	// copyLinks.forEach((copyLink, idx) => {
-	// 	copyLink.addEventListener('click',e => {
-	// 		let linkEl = textArea[idx];
-	// 		console.dir(linkEl)
-	// 		// call function and pass sibling
-	// 		copyToClipBoard(linkEl);
-
-	// 	} )
-	// })
+	
+	let links = document.querySelectorAll('text-area');
+	let copyButton = document.querySelectorAll('.copy-link')
+	links.forEach((link, idx)=> { 
+		copyButton[idx].addEventListener('click', e => 
+		copyToClipBoard(link))
+	})
+	
 }
+
+	
 
 function appendRecipeCard(recipe, idx, recipeContainer) {
 	let overlapping = fridgeChoice.filter(fridgeItem => recipe.ingredients.includes(fridgeItem));
 
-	let id = toString(idx);
 	let newRecipeCard = document.createElement("li");
 	newRecipeCard.setAttribute('class','card recipe-card');
 	newRecipeCard.id = recipe.title.toLowerCase();
@@ -231,21 +222,20 @@ function appendRecipeCard(recipe, idx, recipeContainer) {
 	<div class="list-container collapsible-body">
 		<a href="#jump-to-shopping-list" class="btn create-shopping-list" id="${idx}">Create Shopping List</a>
 		<a href=${recipe.href} class="btn" target="_blank">Visit Recipe Website</a>
-		<textarea class="hidden" id="${idx}">${recipe.href}</textarea>
+		<input class="hidden" id="${idx}">${recipe.href}</input>
 		<button class="btn copy-link">Copy Link</button>
 		<h1>Ingredients</h1>
 	</div> `;
+
 	recipeContainer.appendChild(newRecipeCard);
 
 	let createShoppingList = document.getElementById(idx);
-	createShoppingList.addEventListener('click', e => appendShoppingList(recipe));
+	createShoppingList.addEventListener('click', e => appendToShoppingList(recipe));
 
-	
-	
 }
 
 
-function appendShoppingList(recipe) {
+function appendToShoppingList(recipe) {
 	shoppingList.innerHTML = `
 	<div class="card-content">
 		<h1>Shopping List</h1>
@@ -253,7 +243,6 @@ function appendShoppingList(recipe) {
 		</ul>
 	</div>
 	`;
-	// add ingredients to shopping list
 	const unorderedList = document.getElementById('shopping-list-ul');
 	recipe.ingredients.forEach(ingredient => {
 		createListElements(ingredient, unorderedList)
@@ -287,7 +276,6 @@ function init() {
 }
 
 function updateIcons(icons) {
-	console.log('icons',icons)
 	icons.forEach(icon => {
 		icon.addEventListener('click', e => {
 			console.log('new listener working!')
@@ -300,3 +288,4 @@ function updateIcons(icons) {
 	})
 }
 
+init();
