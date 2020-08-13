@@ -35,6 +35,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const instances = M.Collapsible.init(elems);
   });
 
+
 // Create Buttons
 function createButtons(array, buttonContainer) {
 	array.forEach(foodItem => appendButton(foodItem, buttonContainer));
@@ -72,7 +73,7 @@ function handleChoice(e) {
 		}
 	} 
 	if (parent === 'select-fridge-items') {
-		if (fridgeChoice.includes(id)) {			c
+		if (fridgeChoice.includes(id)) {			
 			fridgeChoice.splice(fridgeChoice.indexOf(id));
 		} else if (fridgeList.includes(id)) {
 			fridgeChoice.push(id) ;
@@ -93,7 +94,6 @@ function handleChoice(e) {
 // Data Handling //
 function createRequestString() {
 	if (proteinChoice) {
-
 		const protein = proteinChoice.split(' ')[1];
 		const meal = mealChoice.split(' ')[1];
 		endpoint = `https://recipepuppyproxy.herokuapp.com/api/?i=${protein}&q=${meal}&p=3`;
@@ -102,19 +102,20 @@ function createRequestString() {
 }
 
 function copyToClipBoard(link) {
+	console.log(link);
 	link.select();
 	document.execCommand('copy');
 }
 
-// // function Fetch URL
-function fetchShortenedUrl() {
+
+function fetchShortenedUrl(url) {
 	requestData = { 
-		"url": "https://www.w3schools.com/tags/ref_urlencode.ASP"
+		"url": url
 	}
 	endpoint = 'https://rel.ink/api/links/'
 	
-
-	fetch(endpoint, {
+	
+	return fetch(endpoint, {
 		method: 'post',
 		// mode: 'cors',
 		body: JSON.stringify(requestData),
@@ -123,13 +124,18 @@ function fetchShortenedUrl() {
 		}
 	}) // make sure post request
 		.then((response) => {
-			// console.log(response.json())	
 			return response.json()	
 		})
 		.then(data => {
-			console.log(data)
+			// return data.hashid
+			// console.log(data.hashid)
+			const shortened = endpoint+data.hashid
+			console.log(shortened);
+			return shortened;
 		})
 }
+
+
 
 // Fetch Data and update recipe cards
 function fetchData() {
@@ -147,7 +153,6 @@ function fetchData() {
 				}
 			})
 			.then(data => {
-				console.log('Data returned successfully')
 				returnedResults = cleanData(data.results);
 				createRecipeCard(returnedResults, recipeSection);
 			});
@@ -198,17 +203,16 @@ function createRecipeCard(recipes, recipeContainer) {
 	let links = document.querySelectorAll('textarea');
 	let copyButton = document.querySelectorAll('.copy-link')
 	links.forEach((link, idx)=> { 
-		console.log(link.select());
-		copyButton[idx].addEventListener('click', e => 
-		copyToClipBoard(link))
-	})
+		copyButton[idx].addEventListener('click', e => copyToClipBoard(link))})
 	
 }
 
 	
 
-function appendRecipeCard(recipe, idx, recipeContainer) {
+async function appendRecipeCard(recipe, idx, recipeContainer) {
 	let overlapping = fridgeChoice.filter(fridgeItem => recipe.ingredients.includes(fridgeItem));
+	
+	let shortURL= await fetchShortenedUrl(recipe.href);
 
 	let newRecipeCard = document.createElement("li");
 	newRecipeCard.setAttribute('class','card recipe-card');
@@ -224,7 +228,7 @@ function appendRecipeCard(recipe, idx, recipeContainer) {
 	<div class="list-container collapsible-body">
 		<a href="#jump-to-shopping-list" class="btn create-shopping-list" id="${idx}">Create Shopping List</a>
 		<a href=${recipe.href} class="btn" target="_blank">Visit Recipe Website</a>
-		<textarea class="hidden" id="${idx}">${recipe.href}</textarea>
+		<textarea class="hidden" id="${idx}">${shortURL}</textarea>
 		<button class="btn copy-link">Copy Link</button>
 		<h1>Ingredients</h1>
 	</div> `;

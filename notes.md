@@ -12,8 +12,7 @@
 -- implement second api
 [] add second api to shorten link.
 [] When do i fire post request?
-[x] create fetch request to (template created)
-  [x] issue!! fetch request not working.
+
 
 Stretch Goals
 Interaction
