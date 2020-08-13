@@ -102,33 +102,34 @@ function createRequestString() {
 }
 
 function copyToClipBoard(link) {
-	console.dir(link)
-	console.log('focus',link.focus());
-	console.log('select',link.select());
+	link.select();
 	document.execCommand('copy');
 }
 
 // // function Fetch URL
-// function fetchShortenedUrl() {
-// 	requestData = { 
-// 		"url": "https://www.w3schools.com/tags/ref_urlencode.ASP"
-// 	}
-// 	endpoint = 'https://rel.ink/api/links/'
+function fetchShortenedUrl() {
+	requestData = { 
+		"url": "https://www.w3schools.com/tags/ref_urlencode.ASP"
+	}
+	endpoint = 'https://rel.ink/api/links/'
 	
 
-// 	fetch(endpoint, {
-// 		method: 'post',
-// 		mode: 'cors',
-// 		body: JSON.stringify(requestData)
-// 	}) // make sure post request
-// 		.then((response) => {
-// 			console.log(response)
-// 			response.json()
-// 		})
-// 		.then(data => {
-// 			console.log(data);
-// 		})
-// }
+	fetch(endpoint, {
+		method: 'post',
+		// mode: 'cors',
+		body: JSON.stringify(requestData),
+		headers: {
+			"Content-type" : "application/json"
+		}
+	}) // make sure post request
+		.then((response) => {
+			// console.log(response.json())	
+			return response.json()	
+		})
+		.then(data => {
+			console.log(data)
+		})
+}
 
 // Fetch Data and update recipe cards
 function fetchData() {
@@ -194,9 +195,10 @@ function createRecipeCard(recipes, recipeContainer) {
 	})
 
 	
-	let links = document.querySelectorAll('text-area');
+	let links = document.querySelectorAll('textarea');
 	let copyButton = document.querySelectorAll('.copy-link')
 	links.forEach((link, idx)=> { 
+		console.log(link.select());
 		copyButton[idx].addEventListener('click', e => 
 		copyToClipBoard(link))
 	})
@@ -222,7 +224,7 @@ function appendRecipeCard(recipe, idx, recipeContainer) {
 	<div class="list-container collapsible-body">
 		<a href="#jump-to-shopping-list" class="btn create-shopping-list" id="${idx}">Create Shopping List</a>
 		<a href=${recipe.href} class="btn" target="_blank">Visit Recipe Website</a>
-		<input class="hidden" id="${idx}">${recipe.href}</input>
+		<textarea class="hidden" id="${idx}">${recipe.href}</textarea>
 		<button class="btn copy-link">Copy Link</button>
 		<h1>Ingredients</h1>
 	</div> `;

@@ -5,6 +5,7 @@
 
 -- [] Styling
 [] select better way of visualizing .empty or .exists
+  [] maybe I can add a fridge icon to items in the recipe card.
 [] styling for desktop
 [] can i add icons to this?
 
@@ -12,7 +13,7 @@
 [] add second api to shorten link.
 [] When do i fire post request?
 [x] create fetch request to (template created)
-  [] issue!! fetch request not working.
+  [x] issue!! fetch request not working.
 
 Stretch Goals
 Interaction
