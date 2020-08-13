@@ -54,7 +54,7 @@ function appendButton(foodItem, buttonContainer) {
 function limitChoices(choice, e) {
 	let previous = document.getElementById(choice);
 	previous.setAttribute('class', 'btn cleared');
-	e.target.setAttribute('class', "btn selected");
+	e.target.setAttribute('class', 'btn selected');
 }
 
 // Handle button choices
@@ -94,7 +94,6 @@ function handleChoice(e) {
 }
 
 // Data Handling //
-// Create request string after buttons have been selected
 function createRequestString() {
 	if (proteinChoice) {
 
@@ -112,27 +111,27 @@ function createRequestString() {
 // 	document.execCommand('copy');
 // }
 
-// function Fetch URL
-function fetchShortenedUrl() {
-	requestData = { 
-		"url": "https://www.w3schools.com/tags/ref_urlencode.ASP"
-	}
-	endpoint = 'https://rel.ink/api/links/'
+// // function Fetch URL
+// function fetchShortenedUrl() {
+// 	requestData = { 
+// 		"url": "https://www.w3schools.com/tags/ref_urlencode.ASP"
+// 	}
+// 	endpoint = 'https://rel.ink/api/links/'
 	
 
-	fetch(endpoint, {
-		method: 'post',
-		mode: 'cors',
-		body: JSON.stringify(requestData)
-	}) // make sure post request
-		.then((response) => {
-			console.log(response)
-			response.json()
-		})
-		.then(data => {
-			console.log(data);
-		})
-}
+// 	fetch(endpoint, {
+// 		method: 'post',
+// 		mode: 'cors',
+// 		body: JSON.stringify(requestData)
+// 	}) // make sure post request
+// 		.then((response) => {
+// 			console.log(response)
+// 			response.json()
+// 		})
+// 		.then(data => {
+// 			console.log(data);
+// 		})
+// }
 
 // Fetch Data and update recipe cards
 function fetchData() {
@@ -179,6 +178,8 @@ function update() {
 
 function createRecipeCard(recipeArray, recipeContainer) {
 	
+	
+
 	recipesHeadline.style.display = "block";
 	recipeArray.forEach((recipe, idx) => {
 		appendRecipeCard(recipe, idx, recipeContainer);
@@ -213,6 +214,8 @@ function createRecipeCard(recipeArray, recipeContainer) {
 }
 
 function appendRecipeCard(recipe, idx, recipeContainer) {
+	let overlapping = fridgeChoice.filter(fridgeItem => recipe.ingredients.includes(fridgeItem));
+
 	let id = toString(idx);
 	let newRecipeCard = document.createElement("li");
 	newRecipeCard.setAttribute('class','card recipe-card');
@@ -221,6 +224,7 @@ function appendRecipeCard(recipe, idx, recipeContainer) {
 	<div class="collapsible-header">
 		<img width="50" height="50" id="${recipe.title.toLowerCase()}" src=${recipe.thumbnail}>
 		<h1 class="recipe-title">${recipe.title}</h1>
+		<h2>You have ${overlapping.length} out of ${recipe.ingredients.length} ingredients for this recipe.</h2>
 	</div>
 	<div class="list-container collapsible-body">
 		<a href="#jump-to-shopping-list" class="btn create-shopping-list" id="${idx}">Create Shopping List</a>
@@ -233,6 +237,9 @@ function appendRecipeCard(recipe, idx, recipeContainer) {
 
 	let createShoppingList = document.getElementById(idx);
 	createShoppingList.addEventListener('click', e => appendShoppingList(recipe));
+
+	
+	
 }
 
 
