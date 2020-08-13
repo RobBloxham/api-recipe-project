@@ -64,9 +64,6 @@ a {
 	font-family: 'Fjalla One', sans-serif;
 }
 
-/* h1 {
-	font-size: 2rem;
-} */
 #preferences {
 	grid-area: preferences;
 }
@@ -94,8 +91,14 @@ a {
 	text-align: center;
 }
 
-#recipe-title {
+.recipe-title {
 	text-align: center;
+	font-size: 2rem;
+}
+
+.recipe-overlap {
+	text-align: center;
+	font-size: 1.5rem;
 }
 
 .recipe-card {
@@ -108,8 +111,7 @@ a {
 }
 
 img {
-	margin: 5px;
-	/* align-items: center; */
+	margin: auto 5px;
 	text-align: center;
 }
 
@@ -154,6 +156,8 @@ img {
 .create-shopping-list {
 	background-color: var(--green);
 }
+
+.recip
 
 
 

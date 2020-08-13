@@ -223,8 +223,10 @@ function appendRecipeCard(recipe, idx, recipeContainer) {
 	newRecipeCard.innerHTML = `
 	<div class="collapsible-header">
 		<img width="50" height="50" id="${recipe.title.toLowerCase()}" src=${recipe.thumbnail}>
-		<h1 class="recipe-title">${recipe.title}</h1>
-		<h2>You have ${overlapping.length} out of ${recipe.ingredients.length} ingredients for this recipe.</h2>
+		<div class='collapsible-text'>
+			<h1 class="recipe-title">${recipe.title}</h1>
+			<h2 class="recipe-overlap">You have ${overlapping.length} out of ${recipe.ingredients.length} ingredients for this recipe.</h2>
+		</div>
 	</div>
 	<div class="list-container collapsible-body">
 		<a href="#jump-to-shopping-list" class="btn create-shopping-list" id="${idx}">Create Shopping List</a>

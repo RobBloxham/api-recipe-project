@@ -12,7 +12,7 @@
 
 [] Check to see that all code is readable
 
-[] How many ingredients overlap in your fridge and recipe?
+[x] How many ingredients overlap in your fridge and recipe?
 
 
 
