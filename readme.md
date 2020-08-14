@@ -1,4 +1,4 @@
-# Recipe Finder 
+# Frigester - Recipe Finder
 # Unit 1 Project Proposal
 
 ## Motivation:
@@ -73,3 +73,12 @@ An API that I will use to shorten the recipe links.
 ![Screen 3](https://i.imgur.com/FFqHg64.png)
 ### Screen 4
 ![Screen 4](https://i.imgur.com/cThToo6.png)
+
+## Stretch Goals
+  * Add copy to clipboard capability
+  * Persist data and store favorite recipes
+  * Improve flow from sections of website
+  * Add an animation that shows how many recipe items you have in fridge
+  * Make shopping list shareable to friends.
+  * Connect to a more robust food api.
+  * Include better images.
