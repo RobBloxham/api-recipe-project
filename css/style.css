@@ -36,13 +36,14 @@ body {
 	font-size: 2.4rem;
 	font-weight: bold;
 	height: 100vh;
-	
 }
+
+
 
 .container {
 	display: flex;
 	flex-direction: column;
-	background-color: white;
+	background-color: var(--light-blue);
 	width: 100%;
 }
 
@@ -55,8 +56,9 @@ header {
 #title { 
 	font-family: 'Lobster', cursive;
 }
+
 #preferences {
-	background-color: var(--light-blue)
+	background-color: var(--light-blue);
 }
 
 .question {
@@ -102,11 +104,6 @@ a {
 	text-align: center;
 }
 
-/* .card-content > ul {
-	text-align: center;
-} */
-
-/* recipe container */
 #returned-recipes {
 	background-color: var(--amber);
 }
@@ -185,10 +182,6 @@ img {
 .exists {
 	color: red;
 }
-
-/* .empty {
-	color: blue;
-} */
 
 .create-shopping-list {
 	background-color: var(--green);
