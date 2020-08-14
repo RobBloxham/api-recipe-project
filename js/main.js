@@ -104,6 +104,7 @@ function createRequestString() {
 
 function copyToClipBoard(link) {
 	console.log(link);
+	link.focus();
 	link.select();
 	document.execCommand('copy');
 }
@@ -153,20 +154,11 @@ function fetchData() {
 			})
 			.then(data => {
 				returnedResults = cleanData(data.results);
-				return returnedResults
-				// createRecipeCard(returnedResults, recipeSection);
-			})
-			.then(results => {
-				results.forEach((recipe,idx) => {
-					fetchShortenedUrl(recipe.href).then(shortened => {
-						returnedResults[idx].href = shortened;
-					});
-				})
+				// console.log(returnedResults)
+				createRecipeCard(returnedResults, recipeSection)
 				return returnedResults
 			})
-			.then(results => {
-				createRecipeCard(results, recipeSection)
-			});
+			
 	}
 }
 
@@ -192,35 +184,23 @@ function cleanData(data) {
 
 function createRecipeCard(recipes, recipeContainer) {
 	recipesHeadline.style.display = "block";
-
-	// recipes.forEach((recipe, idx) => {
-	// 	fetchShortenedUrl(recipe.href)
-	// 	.then(result => {
-	// 		appendRecipeCard(recipe, idx, recipeContainer);
-	// 	})
-	// 	;
-	// });
-
 	recipes.forEach((recipe,idx) => {
-		appendRecipeCard(recipe, idx, recipeContainer)
+		appendRecipeCard(recipe,idx, recipeContainer)
 	})
 
-
-	let links = document.querySelectorAll('textarea');
-	let copyButton = document.querySelectorAll('.copy-link');
-	links.forEach((link, idx)=> { 
-		console.log(link)
-		copyButton[idx].addEventListener('click', e => {
-			copyToClipBoard(link)
-		})})
-	
+	let shortLinkTexts = document.querySelectorAll('.shortened-links')
+	console.log(shortLinkTexts)
+	recipes.forEach((recipe, idx) => {
+		fetchShortenedUrl(recipe.href).then(shortLink => {
+			shortLinkTexts[idx].innerText = shortLink;
+		})
+	})
 }
 
 
 
 function appendRecipeCard(recipe, idx, recipeContainer) {
 	let overlapping = fridgeChoice.filter(fridgeItem => recipe.ingredients.includes(fridgeItem));
-	
 	
 	let newRecipeCard = document.createElement("li");
 	newRecipeCard.setAttribute('class','card recipe-card');
@@ -236,8 +216,7 @@ function appendRecipeCard(recipe, idx, recipeContainer) {
 	<div class="list-container collapsible-body" id=${idx}>
 		<a href="#jump-to-shopping-list" class="btn create-shopping-list" id="${idx}">Create Shopping List</a>
 		<a href=${recipe.href} class="btn" target="_blank">Visit Recipe Website</a>
-		<textarea class="hidden">${recipe.href}</textarea>
-		<button class="btn copy-link">Copy Link</button>
+		<h1 class="shortened-links"></h1>
 		<h1>Ingredients</h1>
 	</div> `;
 

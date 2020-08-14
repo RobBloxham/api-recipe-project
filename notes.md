@@ -9,9 +9,7 @@
 [] styling for desktop
 [] can i add icons to this?
 
--- implement second api
-[] add second api to shorten link.
-[] When do i fire post request?
+
 
 
 Stretch Goals
