@@ -45,18 +45,16 @@ I have always loved to cook. Eating delicious and healthy food has always been i
 * Listen to click event on Shopping List button to render Shopping List Template.
     
 
-
-
-
-
-
-## APIs Used in project:
+## Technologies Used
 1. Recipe Puppy: http://www.recipepuppy.com/api/
 A simple api where I only have to use 2 parameters. A list of comma separated ingredients or a general search query that searches the title of the recipe.
 
 2. Clean URL: 
 https://cleanuri.com/docs
 An API that I will use to shorten the recipe links.
+
+3. Materialize
+4. Picsum - For missing photos
 
 
 

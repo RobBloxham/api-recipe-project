@@ -1,4 +1,3 @@
-// Arrays and Variables
 let mealChoice;
 let fridgeChoice = [];
 let proteinChoice;
@@ -7,12 +6,10 @@ let expanded;
 let endpoint;
 let returnedResults = null;
 
-// List of Food Items to be rendered as buttons
 const mealList = ['sandwich','soup','salad','baked','fried'];
-const fridgeList = ['lettuce','tomato','pickles','chicken','mustard','ketchup','cheese','butter','cabbage'];
+const fridgeList = ['lettuce','tomato','pickles','mustard','ketchup','cheese','butter','cabbage','salsa','olives','spinach'];
 const proteinList = ['chicken','fish','egg','tofu','beef'];
 
-// Cached Element References
 const body = document.body;
 const main = document.getElementById('main');
 const mealSelect = document.getElementById('select-meal');
@@ -24,9 +21,6 @@ const returnToRecipesButton = document.getElementById('return-to-recipes');
 const shoppingList = document.getElementById('shopping-list');
 const recipesHeadline = document.getElementById('recipes-headline');
 
-
-
-// Event Listeners
 body.addEventListener('click', e => handleChoice(e));
 searchRecipesButton.addEventListener('click', fetchData);
 // Materialzie Collapsible
@@ -35,9 +29,15 @@ document.addEventListener('DOMContentLoaded', function() {
     const instances = M.Collapsible.init(elems);
   });
 
+
 init();
 
-// Create Buttons
+function init() {
+	createButtons(mealList, mealSelect);
+	createButtons(fridgeList, fridgeItemsSelect);
+	createButtons(proteinList,proteinSelect);
+}
+
 function createButtons(array, buttonContainer) {
 	array.forEach(foodItem => appendButton(foodItem, buttonContainer));
 }
@@ -50,20 +50,13 @@ function appendButton(foodItem, buttonContainer) {
 	buttonContainer.appendChild(newButton);
 }
 
-function limitChoices(choice, e) {
-	let previous = document.getElementById(choice);
-	previous.setAttribute('class', 'btn cleared');
-	e.target.setAttribute('class', 'btn selected');
-}
 
 // Handle button choices
 function handleChoice(e) {
 	const originalId = e.target.id;
 	const id = e.target.id.split(" ")[1];
 	
-
 	const parent = e.target.parentElement.id;
-	// match the container to the appropriate array
 	if (parent === 'select-meal') {
 		if (!mealChoice) {
 			mealChoice = originalId;
@@ -92,7 +85,12 @@ function handleChoice(e) {
 	} 
 }
 
-// Data Handling //
+function limitChoices(choice, e) {
+	let previous = document.getElementById(choice);
+	previous.setAttribute('class', 'btn cleared');
+	e.target.setAttribute('class', 'btn selected');
+}
+
 function createRequestString() {
 	if (proteinChoice) {
 		const protein = proteinChoice.split(' ')[1];
@@ -102,13 +100,22 @@ function createRequestString() {
 	}
 }
 
-function copyToClipBoard(link) {
-	console.log(link);
-	link.focus();
-	link.select();
-	document.execCommand('copy');
+function fetchData() {
+	if (proteinChoice) {
+		createRequestString();
+		let url = endpoint;
+	
+		return fetch(url)
+			.then((response) => {
+				return response.json();
+			})
+			.then(data => {
+				returnedResults = cleanData(data.results);
+				createRecipeCard(returnedResults, recipeSection)
+				return returnedResults
+			})	
+	}
 }
-
 
 async function fetchShortenedUrl(url) {
 	requestData = { 
@@ -117,7 +124,6 @@ async function fetchShortenedUrl(url) {
 	endpoint = 'https://rel.ink/api/links/'
 	let addTo = 'https://rel.ink/'
 	
-	
 	return await fetch(endpoint, {
 		method: 'post',
 		// mode: 'cors',
@@ -125,55 +131,23 @@ async function fetchShortenedUrl(url) {
 		headers: {
 			"Content-type" : "application/json"
 		}
-	}) // make sure post request
+	})
 		.then((response) => {
 			return response.json()	
 		})
 		.then(data => {
-			// return data.hashid
-			// console.log(data.hashid)
 			const shortened = addTo+data.hashid
 			return shortened;
 		})
 }
 
-// Fetch Data and update recipe cards
-function fetchData() {
-	console.log('Fetching Data')
-	if (proteinChoice) {
-		createRequestString();
-		let url = endpoint;
-	
-		return fetch(url)
-			.then((response) => {
-				if (response.status == 200) {
-					return response.json();
-				} else {
-					reject('server error');
-				}
-			})
-			.then(data => {
-				returnedResults = cleanData(data.results);
-				// console.log(returnedResults)
-				createRecipeCard(returnedResults, recipeSection)
-				return returnedResults
-			})
-			
-	}
-}
-
-
-
-
 function cleanData(data) {
 	data.forEach(recipe => {
 		recipe.title = recipe.title.replace(/\r\n|\n|\r|\t/gm,'');
 		recipe.ingredients = recipe.ingredients.split(',');
-		
 		recipe.ingredients.forEach((ingredient,idx) => {
 			recipe.ingredients[idx] = ingredient.trim();
 		})
-
 		if (recipe.thumbnail === '') {
 			recipe.thumbnail = "https://picsum.photos/50";
 		}
@@ -181,23 +155,18 @@ function cleanData(data) {
 	return data;
 }
 
-
 function createRecipeCard(recipes, recipeContainer) {
 	recipesHeadline.style.display = "block";
 	recipes.forEach((recipe,idx) => {
 		appendRecipeCard(recipe,idx, recipeContainer)
 	})
-
 	let shortLinkTexts = document.querySelectorAll('.shortened-links')
-	console.log(shortLinkTexts)
 	recipes.forEach((recipe, idx) => {
 		fetchShortenedUrl(recipe.href).then(shortLink => {
 			shortLinkTexts[idx].innerText = shortLink;
 		})
 	})
 }
-
-
 
 function appendRecipeCard(recipe, idx, recipeContainer) {
 	let overlapping = fridgeChoice.filter(fridgeItem => recipe.ingredients.includes(fridgeItem));
@@ -216,6 +185,7 @@ function appendRecipeCard(recipe, idx, recipeContainer) {
 	<div class="list-container collapsible-body" id=${idx}>
 		<a href="#jump-to-shopping-list" class="btn create-shopping-list" id="${idx}">Create Shopping List</a>
 		<a href=${recipe.href} class="btn" target="_blank">Visit Recipe Website</a>
+		<h1 class="share-with-friends">Share Recipe With Friends</h1>
 		<h1 class="shortened-links"></h1>
 		<h1>Ingredients</h1>
 	</div> `;
@@ -224,10 +194,8 @@ function appendRecipeCard(recipe, idx, recipeContainer) {
 
 	let createShoppingList = document.getElementById(idx);
 	createShoppingList.addEventListener('click', e => appendToShoppingList(recipe));
-
 	appendUl(idx);
 	appendLiToUl(idx, recipe)
-	
 }
 
 function appendUl(id) {
@@ -265,7 +233,6 @@ function appendToShoppingList(recipe) {
 	updateIcons(icons);
 }
 
-
 function createListElements(ingredient, unorderedList) {
 	const li = document.createElement('li');
 	li.setAttribute('class', 'shopping-list-item')
@@ -281,17 +248,9 @@ function checkFridgeIncludes(ingredient, className, li) {
 	fridgeChoice.includes(ingredient) ? li.setAttribute('class', `${className} exists`) : li.setAttribute('class', `${className} empty`);
 }
 
-// Initialization Function
-function init() {
-	createButtons(mealList, mealSelect);
-	createButtons(fridgeList, fridgeItemsSelect);
-	createButtons(proteinList,proteinSelect);
-}
-
 function updateIcons(icons) {
 	icons.forEach(icon => {
 		icon.addEventListener('click', e => {
-			console.log('new listener working!')
 			if (icon.innerText === 'check_box') {
 				icon.innerText = 'check_box_outline_blank'
 			} else {

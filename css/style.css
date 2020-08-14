@@ -36,6 +36,7 @@ body {
 	font-size: 2.4rem;
 	font-weight: bold;
 	height: 100vh;
+	
 }
 
 .container {
@@ -43,12 +44,7 @@ body {
 	flex-direction: column;
 	background-color: white;
 	width: 100%;
-	/* scroll-snap-type: y mandatory; */
 }
-
-/* .child {
-	scroll-snap-align: start;
-  } */
 
 header {
 	grid-area: header;
@@ -58,6 +54,9 @@ header {
 
 #title { 
 	font-family: 'Lobster', cursive;
+}
+#preferences {
+	background-color: var(--light-blue)
 }
 
 .question {
@@ -73,8 +72,21 @@ a {
 	grid-area: preferences;
 }
 
+#search-recipes-button {
+	display: flex;
+}
+
+#search-recipes {
+	margin: 5px auto;
+	padding: 0px 30px;
+}
+
 #render-recipes {
 	grid-area: recipes;
+}
+
+.list-container > h1 {
+	text-decoration: underline;
 }
 
 .card {
@@ -86,6 +98,14 @@ a {
 	color: var(--blue-grey);
 }
 
+.card-content > h1, ul {
+	text-align: center;
+}
+
+/* .card-content > ul {
+	text-align: center;
+} */
+
 /* recipe container */
 #returned-recipes {
 	background-color: var(--amber);
@@ -94,6 +114,7 @@ a {
 #recipes-headline {
 	display: none;
 	text-align: center;
+	font-family: 'Lobster', cursive;
 }
 
 .recipe-title {
@@ -108,11 +129,13 @@ a {
 
 .recipe-card {
 	margin: 5px 10px;
-	background-color: var(--light-peach);
+	background-color: var(--light-blue);
 }
-
+.collapsible {
+	margin: 0px 5px;
+}
 .collapsible-header {
-	background-color: var(--light-peach);
+	background-color: var(--light-blue);
 }
 
 img {
@@ -126,6 +149,15 @@ img {
 
 #recipe-title {
 	text-align:center;
+}
+
+.share-with-friends {
+	font-size: 2.2rem;
+}
+
+.shortened-links {
+	font-size: 2rem;
+	margin: 0;
 }
 
 .shopping-list-item {
@@ -166,12 +198,6 @@ img {
 	font-family: 'Fjalla One', sans-serif;
 	font-size: 2rem;
 }
-
-.list-container > h1 {
-	text-decoration: underline;
-}
-
-
 
 .hidden {
 	display: none;

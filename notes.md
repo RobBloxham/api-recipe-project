@@ -9,6 +9,12 @@
 [] styling for desktop
 [] can i add icons to this?
 
+remove hover
+change preferences text
+
+add a couple of more fridge items depending on common recipe ingredients
+
+
 
 
 
@@ -21,10 +27,7 @@ Interaction
 [] Scrape website link for first image?
 [] Make fridge bar?
 [] experiment with different colors and themes
-[x] add copy to clipboard button
-[x] add event listener to copy button
-[] call copy to clipboard function and pass recipe
-  [x] how to pass recipe into this function? access by previousElementSibling
+
 
 
 
