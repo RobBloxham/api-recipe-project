@@ -1,5 +1,5 @@
-# Frigester - Recipe Finder
-<www.frigester-final.surge.sh>
+# Fridgester - Recipe Finder
+<www.fridgester-final.surge.sh>
 # Unit 1 Project Proposal
 
 ## Motivation:
